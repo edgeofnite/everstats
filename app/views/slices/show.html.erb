@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @slice.name %>
+</p>
+
+<p>
+  <b>Slicegroup:</b>
+  <%=h @slice.slicegroup_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_slice_path(@slice) %> |
+<%= link_to 'Back', slices_path %>

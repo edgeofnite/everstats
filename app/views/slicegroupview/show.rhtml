@@ -1,0 +1,109 @@
+<div id="content">
+<script>
+TableKit.options.rowEvenClass = "tableevenrow";
+TableKit.options.rowOddClass = "tableoddrow";
+</script>
+<h2>Everstats - Slice Groups Resource Consumption Over Time</h2>
+
+<h3>Past Week Consumption</h3>
+<table class="sortable" border="0" cellspacing="1">
+ <thead>
+ <tr class="tablehead">
+  <td width="20%"><p align="center"><i><b>Slice Group</b></i></td>
+  <td class="number" width="5%"><p align="center"><i><b>#Nodes</b></i></td>
+  <td class="number" width="10%"><p align="center"><i><b>Total CPU Hours (across all nodes)</b></i></td>
+  <td class="number" width="10%"><p align="center"><i><b>Average CPU%</b></i></td>
+  <td class="number" width="10%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
+  <td class="number" width="10%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
+  <td width="35%"><p align="center"><i><b>Members</b></i></td>
+ </tr>
+ </thead>
+ <% @past_week_usages .each do |item| %>
+  <tr>
+    <td><%= link_to item.slicegroup_name, :controller => "stats", :action => "sliceview", :id => item.slicegroup_id %></td>
+    <td> <%= item.total_nodes %> </td>
+    <td> <%= ("%.2f" %  (item.total_activity_minutes.to_f() * item.avg_cpu.to_f()/60.0/100.0).to_s)  %> </td>
+    <td> <%= "%.2f" % item.avg_cpu %> </td>
+    <td> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td> 
+  
+    <%  @slicegorup_id_to_group_map[item.slicegroup_id.to_i()].slices.each do |slice|   %>
+	<%= link_to slice.name, :controller => "stats", :action => "singlesliceview", :id => slice.id %>
+    <% end %>  
+    </td>
+   </tr>
+
+  </tr>
+ <% end %>
+</table>
+
+
+<h3>Past Month Consumption</h3>
+<table class="sortable" border="0" cellspacing="1">
+ <thead>
+ <tr class="tablehead">
+ <td width="20%"><p align="center"><i><b>Slice Group</b></i></td>
+ <td class="number" width="5%"><p align="center"><i><b>#Nodes</b></i></td>
+ <td class="number" width="10%"><p align="center"><i><b>Total CPU Hours (across all nodes)</b></i></td>
+ <td class="number" width="10%"><p align="center"><i><b>Average CPU%</b></i></td>
+ <td class="number" width="10%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
+ <td class="number" width="10%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
+ <td width="35%"><p align="center"><i><b>Members</b></i></td>
+ </tr>
+ </thead>
+
+ <% @past_month_usages .each do |item| %>
+  <tr>
+    <td><%= link_to item.slicegroup_name, :controller => "stats", :action => "sliceview", :id => item.slicegroup_id %></td>
+    <td> <%= item.total_nodes %> </td>
+    <td> <%= ("%.2f" %  (item.total_activity_minutes.to_f() * item.avg_cpu.to_f()/60.0/100.0).to_s)  %> </td>
+    <td> <%= "%.2f" % item.avg_cpu %> </td>
+    <td> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td> 
+  
+    <%  @slicegorup_id_to_group_map[item.slicegroup_id.to_i()].slices.each do |slice|   %>
+	<%= link_to slice.name, :controller => "stats", :action => "singlesliceview", :id => slice.id %>
+    <% end %>  
+    </td>
+   </tr>
+
+  </tr>
+ <% end %>
+</table>
+
+
+<h3>Past Year Consumption</h3>
+<table class="sortable" border="0" cellspacing="1">
+ <thead>
+ <tr class="tablehead">
+ <td width="20%"><p align="center"><i><b>Slice Group</b></i></td>
+ <td class="number" width="5%"><p align="center"><i><b>#Nodes</b></i></td>
+ <td class="number" width="10%"><p align="center"><i><b>Total CPU Hours (across all nodes)</b></i></td>
+ <td class="number" width="10%"><p align="center"><i><b>Average CPU%</b></i></td>
+ <td class="number" width="10%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
+ <td class="number" width="10%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
+ <td width="35%"><p align="center"><i><b>Members</b></i></td>
+ </tr>
+ </thead>
+ <% @past_year_usages .each do |item| %>
+  <tr>
+    <td><%= link_to item.slicegroup_name, :controller => "stats", :action => "sliceview", :id => item.slicegroup_id %></td>
+    <td> <%= item.total_nodes %> </td>
+    <td> <%= ("%.2f" %  (item.total_activity_minutes.to_f() * item.avg_cpu.to_f()/60.0/100.0).to_s)  %> </td>
+    <td> <%= "%.2f" % item.avg_cpu %> </td>
+    <td> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td> 
+  
+    <%  @slicegorup_id_to_group_map[item.slicegroup_id.to_i()].slices.each do |slice|   %>
+	<%= link_to slice.name, :controller => "stats", :action => "singlesliceview", :id => slice.id %>
+    <% end %>  
+    </td>
+   </tr>
+
+  </tr>
+ <% end %>
+</table>
+</div>

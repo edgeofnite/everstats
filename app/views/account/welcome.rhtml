@@ -1,0 +1,30 @@
+<div id="content">
+ <h2>Everstats Admin</h2>
+ <p>You are now logged into the system</p>
+
+    <table border="1">
+ <tr>
+  <td width="80%"><p align="center"><b>Actions</b></td>
+ </tr>
+  <tr>
+   <td><%= link_to "Manage Nodes", :controller => "nodes" %></td>  
+  </tr>
+  <tr>
+   <td><%= link_to "Manage Slices", :controller => "slices" %></td>  
+  </tr>
+  <tr>
+   <td><%= link_to "Manage Slice Groups", :controller => "slicegroups" %></td>
+  </tr>
+  
+   <tr>
+   <td><%= link_to "Manage Configurations", :controller => "configurations" %></td>
+  </tr>
+  
+  <tr>
+    <td><%= link_to "Create New Admin User", :controller => "account", :action => "signup" %></td>  
+   </tr>
+   <tr>
+    <td><%= link_to "Logout", :action=>"logout"%>  </td>
+    </tr>
+</table>
+</div>

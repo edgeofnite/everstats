@@ -1,0 +1,20 @@
+<h1>Editing slice</h1>
+
+<% form_for(@slice) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label 'slicegroup' %><br />
+    <%= f.collection_select :slicegroup_id, Slicegroup.all, :id, :name %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @slice %> |
+<%= link_to 'Back', slices_path %>

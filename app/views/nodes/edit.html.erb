@@ -1,0 +1,20 @@
+<h1>Editing node</h1>
+
+<% form_for(@node) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :hostname %><br />
+    <%= f.text_field :hostname %>
+  </p>
+  <p>
+    <%= f.label :primaryipaddress %><br />
+    <%= f.text_field :primaryipaddress %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @node %> |
+<%= link_to 'Back', nodes_path %>

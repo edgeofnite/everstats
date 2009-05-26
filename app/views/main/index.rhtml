@@ -1,0 +1,50 @@
+<div id="narrowcontent">
+<div id="content">
+<h2>General</h2>
+<p>Everstats collects information about the slices resource consumption on everlab nodes over time, and saves
+it in a central repository.<br>
+Using Everstats, you can: 
+<ul>
+<li>View the resource consumption for each slice (or slice group) on the different nodes over time</li>
+<li>View the different nodes usages over time</li> 
+</ul>
+</p>
+<h2>Features</h2>
+<p>
+<h3>User Features:</h3>
+<ul>
+<li>View the resource consumption of all Everlab slices on Everlab nodes, aggregated over the past week/month/year,
+or for a selected date range.</li>
+<li>View the resource consumption of all Everlab slice groups (which are defined by the Everstats admin) on everlab nodes, 
+aggregated over the past week/month/year, or for a selected date range.</li>
+<li>View the utilization of all Everlab nodes over the past week/month/year, or for a selected date range.</li>
+<li>View the resource consumption of a single slice on the different nodes,
+over the past week/month/year, or for a selected date range.</li>
+<li>View the utilization of a single Everlab node by slices,
+over the past week/month/year, or for a selected date range.</li>
+</ul>
+</p>
+<p>
+<h3>Admin Features:</h3>
+<ul>
+<li>Manage nodes and slices</li>
+<li>Manage slice groups and assign different slice groups for each slice</li>
+<li>Manage Everstats configurations</li>
+</ul>
+</p>
+<h2>Data Collection</h2>
+<p>
+EverStats collects data from PlanetLab Systems.  Click <%= link_to "here", {:controller => "main", :action => "about_data"} %> for more details.
+</p>
+</div>
+</div>
+<div id="sidebar">
+      <%= @chart.js_open_flash_chart_object("my_chart_js_1", 300,300,ActionController::Base.relative_url_root + '/') %>
+	<br/><br/>
+      <div class="about">
+	<h2>About</h2>
+	<p>Everstats was developed in the <a href="http://www.cs.huji.ac.il">School of Computer Science and Engineering</a>
+at the <a href="http://www.huji.ac.il">Hebrew University of Jerusalem</a> with the support of the <a href="http://www.evergrow.org">EverGrow</a> and <a href="http://onelab.eu">Onelab2</a> projects.
+	</p>
+      </div>
+</div>

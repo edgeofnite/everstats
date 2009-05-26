@@ -1,0 +1,6 @@
+---
+mode: development
+runs_at_launch: 0
+identifier: everstats
+port: 3000
+bundle: /Users/elliotjaffe/Desktop/Rails/Locomotive2/Bundles/standardRailsSept2006.locobundle

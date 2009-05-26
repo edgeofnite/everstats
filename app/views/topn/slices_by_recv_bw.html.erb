@@ -1,0 +1,55 @@
+<div id="content">
+<h2>Everstats - Top <%=h @count %> slices by Receiving Bandwidth</h2>
+
+<%= @chart.js_open_flash_chart_object("my_chart_js_1", 900,400,ActionController::Base.relative_url_root + '/') %>
+
+<br/>
+<br/>
+
+<script>
+TableKit.options.rowEvenClass = "tableevenrow";
+TableKit.options.rowOddClass = "tableoddrow";
+</script>
+<table class="sortable" border="0" cellspacing="1">
+ <thead>
+ <tr class="tablehead">
+  <td width="20%"></td>
+  <td width="8%"></td>
+  <td width="16%"></td>
+  <td colspan=2 width="10%"><p align="center">% CPU</td>
+  <td colspan=3 width="16%"><p align="center">Sending Bandwidth</td>
+  <td colspan=3 width="16%"><p align="center">Receiving Bandwidth</td>
+ </tr>
+ <tr class="tablesubhead">
+  <td width="20%"><p align="center">Slice</td>
+  <td width="8%" class="number"><p align="center">#Nodes</td>
+  <td width="16%" class="number"><p align="center">Total Active Time (Hours across all slices)</td>
+  <td class="number"><p align="center">Avg</td>
+  <td class="number"><p align="center">Max</td>
+  <td class="number"><p align="center">Avg (Kbps)</td>
+  <td class="number"><p align="center">Max (Kbps)</td>
+  <td class="number"><p align="center">Total (KB)</td>
+  <td class="number"><p align="center">Avg (Kbps)</td>
+  <td class="number"><p align="center">Max (Kbps)</td>
+  <td class="number"><p align="center">Total (KB)</td>
+ </tr>
+ </thead>
+
+ <% @dayusages .each do |item| %>
+  <tr>
+    <td align="left"><%= link_to item.slice.name, :controller => "stats", :action => "singlesliceview", :id => item.slice.id %></td>
+    <td align="right"> <%= item.node_id %> </td>
+    <td align="right"> <%= "%.2f" % (item.total_activity_minutes.to_f/60) %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
+    <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
+    <td align="right"> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_recv_BW %> </td>
+    <td align="right"> <b> <%= "%.2f" % item.total_recv_BW %> </b></td>
+  </tr>
+ <% end %>
+</table>
+
+</div>
