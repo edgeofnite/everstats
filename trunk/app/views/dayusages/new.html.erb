@@ -1,0 +1,39 @@
+<h1>New dayusage</h1>
+
+<% form_for(@dayusage) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :slice_id %><br />
+    <%= f.text_field :slice_id %>
+  </p>
+  <p>
+    <%= f.label :node_id %><br />
+    <%= f.text_field :node_id %>
+  </p>
+  <p>
+    <%= f.label :day %><br />
+    <%= f.date_select :day %>
+  </p>
+  <p>
+    <%= f.label :total_activity_minutes %><br />
+    <%= f.text_field :total_activity_minutes %>
+  </p>
+  <p>
+    <%= f.label :avg_cpu %><br />
+    <%= f.text_field :avg_cpu %>
+  </p>
+  <p>
+    <%= f.label :avg_send_BW %><br />
+    <%= f.text_field :avg_send_BW %>
+  </p>
+  <p>
+    <%= f.label :avg_recv_BW %><br />
+    <%= f.text_field :avg_recv_BW %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', dayusages_path %>

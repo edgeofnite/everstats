@@ -1,0 +1,13 @@
+<p>
+  <b>Config key:</b>
+  <%=h @configuration.config_key %>
+</p>
+
+<p>
+  <b>Config value:</b>
+  <%=h @configuration.config_value %>
+</p>
+
+
+<%= link_to 'Edit', edit_configuration_path(@configuration) %> |
+<%= link_to 'Back', configurations_path %>

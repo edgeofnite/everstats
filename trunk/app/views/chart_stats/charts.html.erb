@@ -1,0 +1,15 @@
+<div id="content">
+<% if params[:chart] == 'pie' || params[:chart] == 'line' %>
+    <%= @charts.first.js_open_flash_chart_object("my_chart_js_1", 900,400,ActionController::Base.relative_url_root + '/') %>
+    <br/><br/>
+ <%= @charts[0].link_to_ofc_load("CPU Chart", "my_chart_js_1") %>
+ || 
+ <%= @charts[1].link_to_ofc_load("Sending Bandwidth Chart", "my_chart_js_1") %>
+ || 
+ <%= @charts[2].link_to_ofc_load("Receiving Bandwidth Chart", "my_chart_js_1") %>
+<% end %>
+<% if params[:chart] == 'bar' %>
+<%= @chart.js_open_flash_chart_object("my_chart_js_1", 900,400,ActionController::Base.relative_url_root + '/') %>
+<% end %>
+
+</div>

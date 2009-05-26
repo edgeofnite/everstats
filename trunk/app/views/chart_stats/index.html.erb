@@ -1,0 +1,35 @@
+<div id="content">
+<% form_tag(:controller => "chart_stats", :action => "charts", :method => "post") do %>
+<input type="submit" value="submit"><br>
+
+<br>
+<b>Please choose the period to display</b>
+<br> 
+From: <%= select_date Date.today, :prefix => :start_date %>  To: <%= select_date Date.today, :prefix => :end_date %> <br/>
+
+<br/>
+<b>Please choose which chart you would like to display</b>
+<br/>
+<%= radio_button_tag(:chart, "pie") %>
+	<%= label_tag(:chart_pie, "Pie") %>
+<%= radio_button_tag(:chart, "line") %>
+	<%= label_tag(:chart_line, "Line") %>
+<%= radio_button_tag(:chart, "bar") %>
+	<%= label_tag(:chart_bar, "Bar") %>
+
+<br/>
+<br/>
+<b>Please choose from the following list which nodes you would like to display</b>
+<br/>
+
+<% @Nodes.each do |node| %>
+    <%= check_box_tag("node_" + node.id.to_s, node.id.to_s) %>
+	<%= label_tag("node_" + node.id.to_s, node.hostname + " - " + node.primaryipaddress) %>
+    <br/>
+<% end %>
+
+<br>
+<input type="submit" value="submit">
+<% end %>
+
+</div>

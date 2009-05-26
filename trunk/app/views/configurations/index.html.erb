@@ -1,0 +1,22 @@
+<h1>Everstats - Configurations</h1>
+<table border="1">
+ <tr>
+  <td width="40%"><p align="center"><i><b>Configuration</b></i></td>
+  <td width="40%"><p align="center"><i><b>Value</b></i></td>
+ </tr>
+
+<% @configurations.each do |configuration| %>
+  <tr>
+    <td><%=h configuration.config_key %></td>
+    <td><%=h configuration.config_value %></td>
+    <td><%= link_to 'Show', configuration %></td>
+    <td><%= link_to 'Edit', edit_configuration_path(configuration) %></td>
+    <td><%= link_to 'Destroy', configuration, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%= link_to 'New configuration', new_configuration_path %>
+<br />
+<%= link_to "Back to Everstats Main", :controller => "main" %>

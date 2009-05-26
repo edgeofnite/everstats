@@ -1,0 +1,2 @@
+module SlicegroupviewHelper
+end

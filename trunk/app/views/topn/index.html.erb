@@ -1,0 +1,67 @@
+<div id="content">
+<h2>Everstats - All Daily Usages</h2>
+<br/>
+<%= form_tag :action => 'nodes_by_cpu' %>
+ <p>
+  <%= label_tag "Top" %>
+  <%= text_field_tag "count", "10" %>
+  <%= label_tag "nodes by CPU for the past" %>
+  <%= text_field_tag "days", "7" %> 
+  <%= label_tag "days" %>
+  <%= submit_tag 'Report' %>
+ </p>
+</form>
+<%= form_tag :action => 'nodes_by_send_bw' %>
+ <p>
+  <%= label_tag "Top" %>
+  <%= text_field_tag "count", "10" %>
+  <%= label_tag "nodes by Sending Bandwidth for the past" %>
+  <%= text_field_tag "days", "7" %> 
+  <%= label_tag "days" %>
+  <%= submit_tag 'Report' %>
+ </p>
+</form>
+<%= form_tag :action => 'nodes_by_recv_bw' %>
+ <p>
+  <%= label_tag "Top" %>
+  <%= text_field_tag "count", "10" %>
+  <%= label_tag "nodes by Receiving Bandwidth for the past" %>
+  <%= text_field_tag "days", "7" %> 
+  <%= label_tag "days" %>
+  <%= submit_tag 'Report' %>
+ </p>
+</form>
+
+<br/>
+<%= form_tag :action => 'slices_by_cpu' %>
+ <p>
+  <%= label_tag "Top" %>
+  <%= text_field_tag "count", "10" %>
+  <%= label_tag "slices by CPU for the past" %>
+  <%= text_field_tag "days", "7" %> 
+  <%= label_tag "days" %>
+  <%= submit_tag 'Report' %>
+ </p>
+</form>
+<%= form_tag :action => 'slices_by_send_bw' %>
+ <p>
+  <%= label_tag "Top" %>
+  <%= text_field_tag "count", "10" %>
+  <%= label_tag "slices by Sending Bandwidth for the past" %>
+  <%= text_field_tag "days", "7" %> 
+  <%= label_tag "days" %>
+  <%= submit_tag 'Report' %>
+ </p>
+</form>
+<%= form_tag :action => 'slices_by_recv_bw' %>
+ <p>
+  <%= label_tag "Top" %>
+  <%= text_field_tag "count", "10" %>
+  <%= label_tag "slices by Receiving Bandwidth for the past" %>
+  <%= text_field_tag "days", "7" %> 
+  <%= label_tag "days" %>
+  <%= submit_tag 'Report' %>
+ </p>
+</form>
+
+</div>

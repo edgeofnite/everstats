@@ -1,0 +1,24 @@
+<h1>Listing slicegroups</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+
+<% @slicegroups.each do |slicegroup| %>
+  <tr>
+    <td><%=h slicegroup.name %></td>
+    <td><%=h slicegroup.description %></td>
+    <td><%= link_to 'Show', slicegroup %></td>
+    <td><%= link_to 'Edit', edit_slicegroup_path(slicegroup) %></td>
+    <td><%= link_to 'Destroy', slicegroup, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New slicegroup', new_slicegroup_path %>
+<br />
+<%= link_to "Back to Everstats Main", :controller => "main" %>

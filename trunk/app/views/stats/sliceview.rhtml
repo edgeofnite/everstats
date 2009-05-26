@@ -1,0 +1,87 @@
+<div id="content">
+<script>
+TableKit.options.rowEvenClass = "tableevenrow";
+TableKit.options.rowOddClass = "tableoddrow";
+</script>
+
+<h2>Everstats - Slice Resource Consumption Over Time for
+    <%= @slices_display %></i></b>
+</h2>
+<h3>Past Week Consumption</h3>
+<table class="sortable" border="0" cellspacing="1">
+ <thead>
+ <tr class="tablehead">
+  <td width="20%"><p align="center">Slice</td>
+  <td class="number" width="16%"><p align="center">#Nodes</td>
+  <td class="number" width="16%"><p align="center">Total CPU Hours (on all nodes)</td>
+  <td class="number" width="16%"><p align="center">Average CPU%</td>
+  <td class="number" width="16%"><p align="center">Average Sending BW (in Kbps)</td>
+  <td class="number" width="16%"><p align="center">Average Receiving BW (in Kbps) </td>
+ </tr>
+ </thead>
+ <% @past_week_usages .each do |item| %>
+  <tr>
+    <td align="left"><%= link_to item.slice.name, :controller => "stats", :action => "singlesliceview", :id => item.slice.id %></td>
+    <td> <%= item.total_nodes %> </td>
+    <td> <%= ("%.2f" %  (item.total_activity_minutes.to_f() * item.avg_cpu.to_f()/60.0/100.0).to_s)  %> </td>
+    <td> <%= "%.2f" % item.avg_cpu %> </td>
+    <td> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td> <%= "%.2f" % item.avg_recv_BW %> </td>
+
+  </tr>
+ <% end %>
+</table>
+
+
+<h3>Past Month Consumption</h3>
+<table class="sortable" border="0" cellspacing="1">
+ <thead>
+ <tr class="tablehead">
+  <td width="20%"><p align="center">Slice</td>
+  <td class="number" width="16%"><p align="center">#Nodes</td>
+  <td class="number" width="16%"><p align="center">Total CPU Hours (on all nodes)</td>
+  <td class="number" width="16%"><p align="center">Average CPU%</td>
+  <td class="number" width="16%"><p align="center">Average Sending BW (in Kbps)</td>
+  <td class="number" width="16%"><p align="center">Average Receiving BW (in Kbps) </td>
+ </tr>
+ </thead>
+ <% @past_month_usages .each do |item| %>
+  <tr>
+    <td align="left"><%= link_to item.slice.name, :controller => "stats", :action => "singlesliceview", :id => item.slice.id %></td>
+    <td> <%= item.total_nodes %> </td>
+    <td> <%= ("%.2f" %  (item.total_activity_minutes.to_f() * item.avg_cpu.to_f()/60.0/100.0).to_s)  %> </td>
+    <td> <%= "%.2f" % item.avg_cpu %> </td>
+    <td> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td> <%= "%.2f" % item.avg_recv_BW %> </td>
+
+  </tr>
+ <% end %>
+</table>
+
+
+<h3>Past Year Consumption</h3>
+<table class="sortable" border="0" cellspacing="1">
+ <thead>
+ <tr class="tablehead">
+  <td width="20%"><p align="center">Slice</td>
+  <td class="number" width="16%"><p align="center">#Nodes</td>
+  <td class="number" width="16%"><p align="center">Total CPU Hours (on all nodes)</td>
+  <td class="number" width="16%"><p align="center">Average CPU%</td>
+  <td class="number" width="16%"><p align="center">Average Sending BW (in Kbps)</td>
+  <td class="number" width="16%"><p align="center">Average Receiving BW (in Kbps) </td>
+ </tr>
+ </thead>
+
+ <% @past_year_usages .each do |item| %>
+  <tr>
+    <td align="left"><%= link_to item.slice.name, :controller => "stats", :action => "singlesliceview", :id => item.slice.id %></td>
+    <td> <%= item.total_nodes %> </td>
+    <td> <%= ("%.2f" %  (item.total_activity_minutes.to_f() * item.avg_cpu.to_f()/60.0/100.0).to_s)  %> </td>
+    <td> <%= "%.2f" % item.avg_cpu %> </td>
+    <td> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td> <%= "%.2f" % item.avg_recv_BW %> </td>
+
+  </tr>
+ <% end %>
+</table>
+</div>

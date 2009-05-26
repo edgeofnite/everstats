@@ -1,0 +1,47 @@
+<div id="content">
+<h2>About Everstats Data</h2>
+
+<p>Everstats collects data from the slicestat program running on each
+PlanetLab node.  In each collection cycle, the system records for each node and for each slice running on that node:</p>
+<ul>
+<li><b>Node</b> The node name</li>
+<li><b>Slice</b> The slice name</li>
+<li><b>% CPU</b> The percentage of CPU used by this slice on this node</li>
+<li><b>Average Sending Bandwidth</b> The average number of kilobits per second sent by this slice on this node</li>
+<li><b>Average Receiving Bandwidth</b> The average number of kilobits per second received by this slice on this node</li>
+</ul>
+<br/>
+<p>
+The system maintains a summary record for each slice on each node for
+each day.  This record has the following fields:
+</p>
+<ul>
+<li><b>Node</b> The node name</li>
+<li><b>Slice</b> The slice name</li>
+<li><b>Day</b> The day referenced by this record</li>
+<li><b>Sampled Period</b> The number of minutes recorded in this sample.  This value is the number of samples times the sampling period.</li>
+<li><b>Average % CPU usage</b> The average percentage CPU used. (0-100) This value may be greater than 100 if the system is a multi-processor.</li>
+<li><b>Average Sending Bandwidth</b> The average sending bandwidth in Kbps.</li>
+<li><b>Average Receiving Bandwidth</b> The average receiving bandwidth in Kbps.</li>
+<li><b>Maximum Observed % CPU usage</b> The maximum observed percentage CPU used. (0-100) This value may be greater than 100 if the system is a multi-processor.</li>
+<li><b>Maximum Sending Bandwidth</b> The maximum observed sending bandwidth in Kbps.</li>
+<li><b>Maximum Receiving Bandwidth</b> The maximum observed receiving bandwidth in Kbps.</li>
+<li><b>Total Observed % CPU usage</b> The sum of the observed percentage CPU used.  This value is used to calculate the estimated non-idle CPU usage.</li>
+<li><b>Total Sending Bandwidth</b> The sum of the observed sending bandwidth in Kb.</li>
+<li><b>Total Receiving Bandwidth</b> The sum of the observed receiving bandwidth in Kb.</li>
+<li><b>Number of Samples</b> The number of samples recorded in this record.</li>
+<li><b>Last Update</b> The time of the last update to this record.</li>
+</ul>
+
+<p>The Estimated Non-Idle CPU usage can be calculated from each record by applying the formula<br/>
+<br/>
+<tt>
+Average % CPU Usage = Total_Observed_%_CPU_Usage / Number of Samples<br/>
+Estimated Non-Idle CPU Usage = Sampled_Period * Average_%_CPU_Usage / 100
+<br/><br/>
+Average Bandwidth (in Kbps) = Total_Observed_Avg_Bandwidth / Number of Samples<br/>
+Estimated Bandwidth Usage (in KB) = Sampled_Period * Average_Bandwidth * 60 / 8
+</tt>
+<br/>
+</p>
+</div>

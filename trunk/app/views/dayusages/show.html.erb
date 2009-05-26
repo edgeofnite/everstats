@@ -1,0 +1,38 @@
+<p>
+  <b>Slice:</b>
+  <%=h @dayusage.slice_id %>
+</p>
+
+<p>
+  <b>Node:</b>
+  <%=h @dayusage.node_id %>
+</p>
+
+<p>
+  <b>Day:</b>
+  <%=h @dayusage.day %>
+</p>
+
+<p>
+  <b>Total activity minutes:</b>
+  <%=h @dayusage.total_activity_minutes %>
+</p>
+
+<p>
+  <b>Avg cpu:</b>
+  <%=h @dayusage.avg_cpu %>
+</p>
+
+<p>
+  <b>Avg send bw:</b>
+  <%=h @dayusage.avg_send_BW %>
+</p>
+
+<p>
+  <b>Avg recv bw:</b>
+  <%=h @dayusage.avg_recv_BW %>
+</p>
+
+
+<%= link_to 'Edit', edit_dayusage_path(@dayusage) %> |
+<%= link_to 'Back', dayusages_path %>

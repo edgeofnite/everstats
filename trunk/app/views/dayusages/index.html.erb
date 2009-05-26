@@ -1,0 +1,31 @@
+<h1>Everstats - All Daily Usages</h1>
+
+<table>
+  <tr>
+    <th>Slice</th>
+    <th>Node</th>
+    <th>Day</th>
+    <th>Total activity minutes</th>
+    <th>Avg cpu</th>
+    <th>Avg send bw</th>
+    <th>Avg recv bw</th>
+  </tr>
+
+<% @dayusages.each do |dayusage| %>
+  <tr>
+    <td><%=h dayusage.slice_id %></td>
+    <td><%=h dayusage.node_id %></td>
+    <td><%=h dayusage.day %></td>
+    <td><%=h dayusage.total_activity_minutes %></td>
+    <td><%=h dayusage.avg_cpu %></td>
+    <td><%=h dayusage.avg_send_BW %></td>
+    <td><%=h dayusage.avg_recv_BW %></td>
+  </tr>
+<% end %>
+</table>
+
+<br/><br/>
+<p>Note: last 3 columns refer to measurements taken only when active (i.e. - zero activity is not included in the average)</p>
+<br/><br/>
+<%= link_to "Back to Everstats Main", :controller => "main" %>
+
