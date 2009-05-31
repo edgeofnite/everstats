@@ -3,7 +3,7 @@ EVERSTATS_DB = "planetstatsdb"
 EVERSTATS_USER = "everstats"
 SLICESTAT_PASS = "password"
 
-LOGFILE = "EverLog.txt"
+LOGFILE = "EverLog.log"
 #LOGFILE = ""
 
 EVERSTATS_SITE = ""
