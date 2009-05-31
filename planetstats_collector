@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd /home/everstats/planetstats/app/workers
-./EverWorker.py 
+nohup ./EverWorker.py  < /dev/null
