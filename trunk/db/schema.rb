@@ -56,9 +56,6 @@ ActiveRecord::Schema.define(:version => 20090504083903) do
     t.integer  "sampleInterval", :default => 0,   :null => false
   end
 
-  add_index "samples", ["dayAndTime"], :name => "index_samples_on_dayAndTime"
-  add_index "samples", ["slice_id", "node_id", "dayAndTime"], :name => "groups_samples"
-
   create_table "slicegroups", :force => true do |t|
     t.string "name",        :limit => 100, :default => "", :null => false
     t.string "description",                :default => "", :null => false
