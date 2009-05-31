@@ -305,18 +305,22 @@ def Run():
 			get_nodes_time = time.time()
 			if get_nodes_time > next_retry_dead_nodes:
 				get_nodes(1)
-				next_retry_dead_nodes = get_nodes_time + EverConf.RETRY_DEAD_NODES_PERIOD
 			else:
 				get_nodes(0)
 			PrintMe(logFile, "\t\tget_nodes, done: "+time.asctime())
 			insert_nodes()
 			PrintMe(logFile, "\t\tinsert_nodes, done:" +time.asctime())
-			clean()
+			if get_nodes_time > next_retry_dead_nodes:
+				# Only clean the DB once every few hours
+				clean()
 			PrintMe(logFile, "\tFinish Getting nodes at: "+time.asctime())
 			PrintMe(logFile, "\tFound total "+str(len(NODES_DATA))+" active nodes.")
 			PrintMe(logFile, "\tSleeping for "+str(max(get_nodes_time+GET_NODE_LOOP_TIME-time.time(),0)))
 			PrintMe(logFile, "\t-------")
 			time.sleep(max(get_nodes_time+GET_NODE_LOOP_TIME-time.time(),0))
+			if get_nodes_time > next_retry_dead_nodes:
+				next_retry_dead_nodes = get_nodes_time + EverConf.RETRY_DEAD_NODES_PERIOD
+
 
 def PrintMe(logFile, data):
 	'''Simple print me method.'''
