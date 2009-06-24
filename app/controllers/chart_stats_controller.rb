@@ -97,11 +97,11 @@ class ChartStatsController < ApplicationController
         if maxcpu < cpu[item.node.hostname]
           maxcpu = cpu[item.node.hostname]
         end
-        sendBW[item.node.hostname] += 60*item.total_activity_minutes*item.total_send_BW/item.number_of_samples/8
+        sendBW[item.node.hostname] += 60*item.total_activity_minutes*item.total_send_BW/item.number_of_samples
         if maxsendBW < sendBW[item.node.hostname]
           maxsendBW = sendBW[item.node.hostname]
         end
-        recvBW[item.node.hostname] += 60*item.total_activity_minutes*item.total_recv_BW/item.number_of_samples/8
+        recvBW[item.node.hostname] += 60*item.total_activity_minutes*item.total_recv_BW/item.number_of_samples
         if maxrecvBW < recvBW[item.node.hostname]
           maxrecvBW = recvBW[item.node.hostname]
         end
@@ -193,8 +193,8 @@ class ChartStatsController < ApplicationController
         if not recvbw.has_key?(node); recvbw[node] = []; end
         results.group_by(&:day).each do |day, values|
           cpu[node] << ScatterValue.new((day - startDate), values.inject(0) {|sum, item| sum + item.total_activity_minutes*item.total_cpu/item.number_of_samples/100/60 })
-          sendbw[node] << ScatterValue.new((day - startDate), values.inject(0) {|sum, item| sum + 60*item.total_activity_minutes*item.total_send_BW/item.number_of_samples/8})
-          recvbw[node] << ScatterValue.new((day - startDate), values.inject(0) {|sum, item| sum + 60*item.total_activity_minutes*item.total_recv_BW/item.number_of_samples/8})
+          sendbw[node] << ScatterValue.new((day - startDate), values.inject(0) {|sum, item| sum + 60*item.total_activity_minutes*item.total_send_BW/item.number_of_samples})
+          recvbw[node] << ScatterValue.new((day - startDate), values.inject(0) {|sum, item| sum + 60*item.total_activity_minutes*item.total_recv_BW/item.number_of_samples})
         end
       end
 

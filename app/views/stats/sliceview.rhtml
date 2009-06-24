@@ -25,8 +25,8 @@ TableKit.options.rowOddClass = "tableoddrow";
     <td> <%= item.total_nodes %> </td>
     <td> <%= ("%.2f" %  (item.total_activity_minutes.to_f() * item.avg_cpu.to_f()/60.0/100.0).to_s)  %> </td>
     <td> <%= "%.2f" % item.avg_cpu %> </td>
-    <td> <%= "%.2f" % item.avg_send_BW %> </td>
-    <td> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
+    <td> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
 
   </tr>
  <% end %>
@@ -51,8 +51,8 @@ TableKit.options.rowOddClass = "tableoddrow";
     <td> <%= item.total_nodes %> </td>
     <td> <%= ("%.2f" %  (item.total_activity_minutes.to_f() * item.avg_cpu.to_f()/60.0/100.0).to_s)  %> </td>
     <td> <%= "%.2f" % item.avg_cpu %> </td>
-    <td> <%= "%.2f" % item.avg_send_BW %> </td>
-    <td> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
+    <td> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
 
   </tr>
  <% end %>
@@ -78,8 +78,8 @@ TableKit.options.rowOddClass = "tableoddrow";
     <td> <%= item.total_nodes %> </td>
     <td> <%= ("%.2f" %  (item.total_activity_minutes.to_f() * item.avg_cpu.to_f()/60.0/100.0).to_s)  %> </td>
     <td> <%= "%.2f" % item.avg_cpu %> </td>
-    <td> <%= "%.2f" % item.avg_send_BW %> </td>
-    <td> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
+    <td> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
 
   </tr>
  <% end %>
