@@ -18,6 +18,12 @@ class Dayusage < ActiveRecord::Base
       return 24 * Node.count(:conditions => "online = 1")
     end
 
+    # return the time since yesterday
+    def Dayusage.day_time_period
+      result = Dayusage.find_by_sql("select date_format(now(), '%T') as period");
+      return result[0].period
+    end
+
     # return the total number of CPU hours used in the last 24 hours
     def Dayusage.day_cpu_usage
       result = Dayusage.find_by_sql("select sum(total_activity_minutes)*sum(total_cpu)/sum(number_of_samples)/100/60 as total_cpu from dayusages where day > date_sub(now(), interval 1 day)")
