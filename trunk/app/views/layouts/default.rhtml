@@ -21,7 +21,7 @@
 		document.write (d.toUTCString());
 	   </script><br/>
 	  <%= Node.count(:conditions => "online = 1") %> nodes reporting (out of <%= Node.count(:all) %>)<br/>
-	  Past 24 hours:<br/>
+	  Past <%= Dayusage.day_time_period %><br/>
 	  <%= "%0.0f" % Dayusage.day_cpu_usage %> CPU Hours (out of <%= "%0.0f" % Dayusage.day_potential_cpu %>)<br/>
 	  <%= "%0.2f" % Dayusage.day_recv_GB_usage %> GB In, <%= "%0.2f" % Dayusage.day_send_GB_usage %> GB out
       </p>
