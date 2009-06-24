@@ -7,8 +7,8 @@ PlanetLab node.  In each collection cycle, the system records for each node and 
 <li><b>Node</b> The node name</li>
 <li><b>Slice</b> The slice name</li>
 <li><b>% CPU</b> The percentage of CPU used by this slice on this node</li>
-<li><b>Average Sending Bandwidth</b> The average number of kilobits per second sent by this slice on this node</li>
-<li><b>Average Receiving Bandwidth</b> The average number of kilobits per second received by this slice on this node</li>
+<li><b>Average Sending Bandwidth</b> The average number of bytes per second sent by this slice on this node</li>
+<li><b>Average Receiving Bandwidth</b> The average number of bytes per second received by this slice on this node</li>
 </ul>
 <br/>
 <p>
@@ -39,8 +39,8 @@ each day.  This record has the following fields:
 Average % CPU Usage = Total_Observed_%_CPU_Usage / Number of Samples<br/>
 Estimated Non-Idle CPU Usage = Sampled_Period * Average_%_CPU_Usage / 100
 <br/><br/>
-Average Bandwidth (in Kbps) = Total_Observed_Avg_Bandwidth / Number of Samples<br/>
-Estimated Bandwidth Usage (in KB) = Sampled_Period * Average_Bandwidth * 60 / 8
+Average Bandwidth (in Kbps) = Total_Observed_Avg_Bandwidth / Number of Samples / 1024<br/>
+Estimated Bandwidth Usage (in KB) = Sampled_Period * Average_Bandwidth * 60 / 1024
 </tt>
 <br/>
 </p>

@@ -42,12 +42,12 @@ TableKit.options.rowOddClass = "tableoddrow";
     <td align="right"> <%= "%.2f" % (item.total_activity_minutes.to_f/60) %> </td>
     <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
     <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
-    <td align="right"> <%= "%.2f" % item.avg_send_BW %> </td>
-    <td align="right"> <%= "%.2f" % item.max_send_BW %> </td>
-    <td align="right"> <%= "%.2f" % item.total_send_BW %> </td>
-    <td align="right"> <%= "%.2f" % item.avg_recv_BW %> </td>
-    <td align="right"> <%= "%.2f" % item.max_recv_BW %> </td>
-    <td align="right"> <b> <%= "%.2f" % item.total_recv_BW %> </b></td>
+    <td align="right"> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % (item.max_send_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % (item.total_send_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % (item.max_recv_BW.to_f/1024.0) %> </td>
+    <td align="right"> <b> <%= "%.2f" % (item.total_recv_BW.to_f/1024.0) %> </b></td>
   </tr>
  <% end %>
 </table>

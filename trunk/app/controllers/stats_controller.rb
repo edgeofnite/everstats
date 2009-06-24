@@ -46,7 +46,7 @@ class StatsController < ApplicationController
     @page_title = "Node Activity for %s" % @node.hostname
     basic_query_str = "SELECT slice_id , SUM(total_activity_minutes) as total_activity_minutes, " +
       "avg(avg_cpu) as avg_cpu, avg(avg_send_BW) as avg_send_BW, avg(avg_recv_BW) as avg_recv_BW, " +
-      "sum(total_activity_minutes)*sum(total_cpu)/sum(number_of_samples)/100 as total_cpu, 60*sum(total_activity_minutes)*sum(total_send_BW)/sum(number_of_samples)/8 as total_send_BW, 60*sum(total_activity_minutes)*sum(total_recv_BW)/sum(number_of_samples)/8 as total_recv_BW, max(max_cpu) as max_cpu, max(max_send_BW) as max_send_BW, max(max_recv_BW) as max_recv_BW, sum(number_of_samples) as number_of_samples, max(last_update) as last_update " +
+      "sum(total_activity_minutes)*sum(total_cpu)/sum(number_of_samples)/100 as total_cpu, 60*sum(total_activity_minutes)*sum(total_send_BW)/sum(number_of_samples) as total_send_BW, 60*sum(total_activity_minutes)*sum(total_recv_BW)/sum(number_of_samples) as total_recv_BW, max(max_cpu) as max_cpu, max(max_send_BW) as max_send_BW, max(max_recv_BW) as max_recv_BW, sum(number_of_samples) as number_of_samples, max(last_update) as last_update " +
       "FROM dayusages "
     past_week_query_str = basic_query_str + "WHERE day > date_add(curdate(), interval -7 day) and node_id=" + params["id"] + " GROUP BY slice_id"
     past_month_query_str = basic_query_str + "WHERE day > date_add(curdate(), interval -1 month) and node_id=" + params["id"] + " GROUP BY slice_id"
@@ -62,7 +62,7 @@ class StatsController < ApplicationController
     @page_title = "Slice Activity for %s" % @slice.name
     basic_query_str = "SELECT node_id , SUM(total_activity_minutes) as total_activity_minutes, " +
       "avg(avg_cpu) as avg_cpu, avg(avg_send_BW) as avg_send_BW, avg(avg_recv_BW) as avg_recv_BW, " +
-      "sum(total_activity_minutes)*sum(total_cpu)/sum(number_of_samples)/100 as total_cpu, 60*sum(total_activity_minutes)*sum(total_send_BW)/sum(number_of_samples)/8 as total_send_BW, 60*sum(total_activity_minutes)*sum(total_recv_BW)/sum(number_of_samples)/8 as total_recv_BW, max(max_cpu) as max_cpu, max(max_send_BW) as max_send_BW, max(max_recv_BW) as max_recv_BW, sum(number_of_samples) as number_of_samples, max(last_update) as last_update " +
+      "sum(total_activity_minutes)*sum(total_cpu)/sum(number_of_samples)/100 as total_cpu, 60*sum(total_activity_minutes)*sum(total_send_BW)/sum(number_of_samples) as total_send_BW, 60*sum(total_activity_minutes)*sum(total_recv_BW)/sum(number_of_samples) as total_recv_BW, max(max_cpu) as max_cpu, max(max_send_BW) as max_send_BW, max(max_recv_BW) as max_recv_BW, sum(number_of_samples) as number_of_samples, max(last_update) as last_update " +
       "FROM dayusages "
     past_week_query_str = basic_query_str + "WHERE day > date_add(curdate(), interval -7 day) and slice_id=" + params["id"] + " GROUP BY node_id"
     past_month_query_str = basic_query_str + "WHERE day > date_add(curdate(), interval -1 month) and slice_id=" + params["id"] + " GROUP BY node_id"
