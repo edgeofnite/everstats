@@ -24,7 +24,7 @@ class ChartStatsController < ApplicationController
     return chart
   end
 
-  def doLineChart(title, xlegend, ylegend, hashOfValues)
+  def doLineChart(title, xlegend, ylegend, hashOfValues, tooltip, startDate, endDate)
     colors = ['#DFC329', '#6363AC', '#5E4725', "#459a89", "#9a89f9", "#666666"]
 
     title = Title.new(title)
@@ -39,7 +39,6 @@ class ChartStatsController < ApplicationController
     chart.set_title(title)
     chart.set_x_legend(x_legend)
     chart.set_y_legend(y_legend)
-
     maxx = 0
     maxy = 0
     index = 0
@@ -47,6 +46,7 @@ class ChartStatsController < ApplicationController
       line = ScatterLine.new(colors[index], 3)
       line.text = label.hostname
       line.width = 2
+      line.tooltip = tooltip
       line.set_values(values)
       maxy = values.inject(maxy) {|max, val| (max < val.instance_values['y']) ? val.instance_values['y'] : max }
       maxx = values.inject(maxx) {|max, val| (max < val.instance_values['x']) ? val.instance_values['x'] : max }
@@ -58,9 +58,17 @@ class ChartStatsController < ApplicationController
     y.set_range(0,maxy,maxy/10)
     chart.y_axis = y
 
-    x_axis = XAxis.new
-    x_axis.set_range(0,maxx+1, (maxx+1)/10)
-    chart.x_axis = x_axis
+    xaxis = XAxis.new
+    # grid line and tick every 10
+    xaxis.set_range(0, maxx+1, (maxx+1)/10)
+    xaxis.set_steps(86400)
+    labels = []
+    startDate.step(endDate, 86400) {|val|
+      labels << XAxisLabel.new(Time.at(val).strftime("%b %d %Y"),'#000000', 11, 90)
+    }
+    xaxis.set_labels(labels)
+    chart.set_x_axis(xaxis)
+
     return chart
   end
 
@@ -97,11 +105,11 @@ class ChartStatsController < ApplicationController
         if maxcpu < cpu[item.node.hostname]
           maxcpu = cpu[item.node.hostname]
         end
-        sendBW[item.node.hostname] += 60*item.total_activity_minutes*item.total_send_BW/item.number_of_samples
+        sendBW[item.node.hostname] += 60*item.total_activity_minutes*item.total_send_BW/item.number_of_samples/1024
         if maxsendBW < sendBW[item.node.hostname]
           maxsendBW = sendBW[item.node.hostname]
         end
-        recvBW[item.node.hostname] += 60*item.total_activity_minutes*item.total_recv_BW/item.number_of_samples
+        recvBW[item.node.hostname] += 60*item.total_activity_minutes*item.total_recv_BW/item.number_of_samples/1024
         if maxrecvBW < recvBW[item.node.hostname]
           maxrecvBW = recvBW[item.node.hostname]
         end
@@ -193,19 +201,19 @@ class ChartStatsController < ApplicationController
         if not recvbw.has_key?(node); recvbw[node] = []; end
         results.group_by(&:day).each do |day, values|
           cpu[node] << ScatterValue.new((day - startDate), values.inject(0) {|sum, item| sum + item.total_activity_minutes*item.total_cpu/item.number_of_samples/100/60 })
-          sendbw[node] << ScatterValue.new((day - startDate), values.inject(0) {|sum, item| sum + 60*item.total_activity_minutes*item.total_send_BW/item.number_of_samples})
-          recvbw[node] << ScatterValue.new((day - startDate), values.inject(0) {|sum, item| sum + 60*item.total_activity_minutes*item.total_recv_BW/item.number_of_samples})
+          sendbw[node] << ScatterValue.new((day - startDate), values.inject(0) {|sum, item| sum + 60*item.total_activity_minutes*item.total_send_BW/item.number_of_samples}/1024)
+          recvbw[node] << ScatterValue.new((day - startDate), values.inject(0) {|sum, item| sum + 60*item.total_activity_minutes*item.total_recv_BW/item.number_of_samples}/1024)
         end
       end
 
       title = "CPU Hours used between %s and %s" % [Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i), Date.civil(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i)]
-      @cpuchart = doLineChart(title, "day", "CPU Usage (Hours)", cpu)
+      @cpuchart = doLineChart(title, "day", "CPU Usage (Hours)", cpu, "#y# CPU Hours on day #x#",Time.local(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i).tv_sec, Time.local(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i).tv_sec)
 
       title = "Sending Bandwidth (KB)between %s and %s" % [Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i), Date.civil(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i)]
-      @sendbwchart = doLineChart(title, "day", "Sending Bandwidth (KB)", sendbw)
+      @sendbwchart = doLineChart(title, "day", "Sending Bandwidth (KB)", sendbw, "#y# KB on day #x#",Time.local(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i).tv_sec, Time.local(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i).tv_sec)
 
       title = "Receiving Bandwidth (KB) between %s and %s" % [Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i), Date.civil(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i)]
-      @recvbwchart = doLineChart(title, "day", "Receiving Bandwidth (KB)", recvbw)
+      @recvbwchart = doLineChart(title, "day", "Receiving Bandwidth (KB)", recvbw, "#y# KB on day #x#",Time.local(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i).tv_sec, Time.local(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i).tv_sec)
 
       @charts = [@cpuchart, @sendbwchart, @recvbwchart]
     end
