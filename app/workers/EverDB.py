@@ -87,17 +87,9 @@ class EverDB:
 		
 	def AddNewSamples(self, samples):
 		'''Adding new Samples to the DB.'''
-		#id, slice_id, node_id, dayAndTime, cpu, avgSendBW, avgRecvBW, sampleInterval
-		self.AddNewData("Insert into samples values(%s,%s,%s,%s,%s,%s,%s,%s)", samples)
+		#id, slice_id, node_id, dayAndTime, cpu, avgSendBW, avgRecvBW, sampleInterval, pctmem, phymem, virmem, procs, runprocs
+		self.AddNewData("Insert into samples values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", samples)
 			   
-	def QuerySamples(self):
-		self.c.execute("SELECT slice_id, node_id, date(dayAndTime) as day, sum(sampleInterval)/60 as total_activity_minutes, avg(cpu) as avg_cpu, avg(avgSendBW) as avg_send_BW, avg(avgRecvBW) as avg_recv_BW FROM samples WHERE cpu<>0 or avgSendBW <> 0 or avgRecvBW <>0 group by slice_id, node_id, date(dayAndTime)")
-		data=[]
-		for slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW in self.c:
-			data.append((slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW))			
-		return data
-	
-
 	def CleanSamples(self,last_date):
 		'''Cleans old Samples from the DB.
 		This is painfully slow.  To make it faster, we create a new
@@ -136,23 +128,38 @@ class EverDB:
 		13	max_recv_BW
 		14	number_of_samples
 		15	last_update
+		16	avg_pctmem
+		17	total_pctmem
+		18	max_pctmem
+		19	avg_phymem
+		20	total_phymem
+		21	max_phymem
+		22	avg_virmem
+		23	total_virmem
+		24	max_virmem
+		25	avg_procs
+		26	total_procs
+		27	max_procs
+		28	avg_runprocs
+		29	total_runprocs
+		30	max_runprocs
 '''
 		self.c.execute("SELECT * FROM dayusages where slice_id = %s and node_id = %s and day = '%s'"%(slice_id, node_id, day))
 		record =  self.c.fetchone()
 		return record
 
-	def UpdateDayUsage(self, record_id, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update):
+	def UpdateDayUsage(self, record_id, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update, avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs):
 		'''Updating an existing dayusage record. id, node_id, slice_id and day are constants'''
-		self.c.execute("UPDATE dayusages SET total_activity_minutes = %s, avg_cpu = %s, avg_send_BW = %s, avg_recv_BW = %s, total_cpu = %s, total_send_BW = %s, total_recv_BW = %s, max_cpu = %s, max_send_BW = %s, max_recv_BW = %s, number_of_samples = %s, last_update = '%s' WHERE id = %s" % (total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update, record_id))
+		self.c.execute("UPDATE dayusages SET total_activity_minutes = %s, avg_cpu = %s, avg_send_BW = %s, avg_recv_BW = %s, total_cpu = %s, total_send_BW = %s, total_recv_BW = %s, max_cpu = %s, max_send_BW = %s, max_recv_BW = %s, number_of_samples = %s, last_update = '%s', avg_pctmem = '%s',total_pctmem = '%s',max_pctmem = '%s',avg_phymem = '%s',total_phymem = '%s',max_phymem = '%s',avg_virmem = '%s',total_virmem = '%s',max_virmem = '%s',avg_procs = '%s',total_procs = '%s',max_procs = '%s',avg_runprocs = '%s',total_runprocs = '%s',max_runprocs = '%s' WHERE id = %s" % (total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update, avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs,record_id))
 
-	def AddNewDayUsage(self, record_id, slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update):
-		self.AddNewData("Insert into dayusages  values (%s, %s,%s,%s,%s,%s,%s,%s,%s, %s, %s, %s, %s ,%s ,%s ,%s)", ((record_id, slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update),))
+	def AddNewDayUsage(self, record_id, slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update, avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs):
+		self.AddNewData("Insert into dayusages  values (%s, %s,%s,%s,%s,%s,%s,%s,%s, %s, %s, %s, %s ,%s ,%s ,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", ((record_id, slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update, avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs,),))
 
 	def GetAllDayUsages(self, day):
-		self.c.execute("SELECT id, node_id, slice_id, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update from dayusages where day = '%s'" % day)
+		self.c.execute("SELECT id, node_id, slice_id, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update, avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs from dayusages where day = '%s'" % day)
 		data=Ddict(lambda: Ddict( list ))
-		for id, node_id, slice_id, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update in self.c:
-			data[node_id][slice_id] = [id, node_id, slice_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update];
+		for id, node_id, slice_id, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update, avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs in self.c:
+			data[node_id][slice_id] = [id, node_id, slice_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update,avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs];
 		return data
 		
 if __name__ == "__main__":

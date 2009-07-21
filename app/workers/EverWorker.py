@@ -27,6 +27,14 @@ SLICESTAT_CPU_INDEX = EverConf.SLICESTAT_CPU_INDEX #CPU consumption(%)
 SLICESTAT_SEND_BW_INDEX = EverConf.SLICESTAT_SEND_BW_INDEX #Average sending bandwidth for last 5 min(in Kbps)
 SLICESTAT_RECV_BW_INDEX = EverConf.SLICESTAT_RECV_BW_INDEX #Average receiving bandwidth for last 5 min(in Kbps) 
 
+SLICESTAT_PCTMEM_INDEX = EverConf.SLICESTAT_PCTMEM_INDEX #PctMem used
+SLICESTAT_PHYMEM_INDEX = EverConf.SLICESTAT_PHYMEM_INDEX #Physical mem used
+SLICESTAT_VIRMEM_INDEX = EverConf.SLICESTAT_VIRMEM_INDEX #Virtual mem used
+SLICESTAT_PROCS_INDEX = EverConf.SLICESTAT_PROCS_INDEX #Allocated Processes 
+SLICESTAT_RUNPROCS_INDEX = EverConf.SLICESTAT_RUNPROCS_INDEX #Running Processes 
+
+SLICESTAT_MAX_INDEX = EverConf.SLICESTAT_MAX_INDEX
+
 NODES = []
 NODES_DATA = {}
 
@@ -63,12 +71,17 @@ class RequestNode(Thread):
 		for i in range(len(tokens)):
 			#splitting the lines to ','-tokens, each token is a data about a sample, we only care about few of them.
 			sub_tokens = tokens[i].split(",")
-			if (len(sub_tokens) > max(SLICESTAT_SLICE_NAME_INDEX,SLICESTAT_CPU_INDEX,SLICESTAT_SEND_BW_INDEX,SLICESTAT_RECV_BW_INDEX)):
+			if (len(sub_tokens) > SLICESTAT_MAX_INDEX)
 				sub_res = []
 				sub_res.append(sub_tokens[SLICESTAT_SLICE_NAME_INDEX])
 				sub_res.append(sub_tokens[SLICESTAT_CPU_INDEX])
 				sub_res.append(sub_tokens[SLICESTAT_SEND_BW_INDEX])
 				sub_res.append(sub_tokens[SLICESTAT_RECV_BW_INDEX])
+				sub_res.append(sub_tokens[SLICESTAT_PCTMEM_INDEX])
+				sub_res.append(sub_tokens[SLICESTAT_PHYMEM_INDEX])
+				sub_res.append(sub_tokens[SLICESTAT_VIRMEM_INDEX])
+				sub_res.append(sub_tokens[SLICESTAT_PROCS_INDEX])
+				sub_res.append(sub_tokens[SLICESTAT_RUNPROCS_INDEX])
 			res.append(sub_res)
 		return res
 
@@ -211,7 +224,7 @@ def insert_nodes():
 		node_id = Origin_Nodes[node][0]
 		for slice in NODES_DATA[node]:
 			slice_id = Origin_Slices[slice[0]]
-			newDataSamples.append((max_id, slice_id, node_id, dayTime, slice[1], slice[2], slice[3], GET_NODE_LOOP_TIME))
+			newDataSamples.append((max_id, slice_id, node_id, dayTime, slice[1], slice[2], slice[3], GET_NODE_LOOP_TIME, slice[4], slice[5], slice[6], slice[7]))
 			max_id = max_id + 1
 			max_dayUsage_id = update_day_usage(max_dayUsage_id, node_id, slice_id, existingDayUsages[node_id][slice_id], slice, day, dayTime);
 	if (len(newDataSamples) > 0):
@@ -228,46 +241,48 @@ def update_day_usage(max_dayUsage_id, node_id, slice_id, record, slicedata, day,
 				     insert
 	    returns the max_dayUsage_id (incremented if necessary)
 	    '''
+	cpu = float(slicedata[1])
+	send_BW = float(slicedata[2])
+	recv_BW = float(slicedata[3])
+	pctMem = float(slicedata[4])
+	phyMem = float(slicedata[5])
+	virMem = float(slicedata[6])
+	procs = float(slicedata[7])
+	runProcs = float(slicedata[8])
+
 	if record == []:
-		#id, slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update
+		#id, slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update,avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs
 		# total = avg = max because there is only one entry!
-		cpu = float(slicedata[1])
-		send_BW = float(slicedata[2])
-		recv_BW = float(slicedata[3])
-		DB.AddNewDayUsage(max_dayUsage_id, slice_id, node_id, day, GET_NODE_LOOP_TIME/60, cpu, send_BW, recv_BW, cpu, send_BW, recv_BW, cpu, send_BW, recv_BW, 1, dayTime)
+		DB.AddNewDayUsage(max_dayUsage_id, slice_id, node_id, day, GET_NODE_LOOP_TIME/60, cpu, send_BW, recv_BW, cpu, send_BW, recv_BW, cpu, send_BW, recv_BW, 1, dayTime, pctmem, pctmem, pctmem, phymem, phymem, phymem, virmem, virmem, virmem, procs, procs, procs, runprocs, runprocs, runprocs)
 		max_dayUsage_id = max_dayUsage_id+1
 	else:
 		# we have a record with the current data.  let's update the fields
 		# by name (for readability)
-		#id, slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update
+		#id, slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update, avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs
 		record_id = record[0]
 		day = record[3]
 		total_activity_minutes = record[4] + (GET_NODE_LOOP_TIME/60)
-		# Warning: total_cpu is a sum of percentages and not a value
-		# its only use is to calculate the running average!!!
-		total_cpu = record[8] + float(slicedata[1])
-		total_send_BW = record[9] + float(slicedata[2])
-		total_recv_BW = record[10] + float(slicedata[3])
-		if record[11] < float(slicedata[1]):
-			max_cpu = float(slicedata[1])
-		else:
-			max_cpu = record[11]
-		if record[12] < float(slicedata[2]):
-			max_send_BW = float(slicedata[2])
-		else:
-			max_send_BW = record[12]
-		if record[13] < float(slicedata[3]):
-			max_recv_BW = float(slicedata[3])
-		else:
-			max_recv_BW = record[13]
 		number_of_samples = record[14] + 1
-		avg_cpu = total_cpu / number_of_samples
-		avg_send_BW = total_send_BW / number_of_samples
-		avg_recv_BW = total_recv_BW / number_of_samples
+		total_cpu,avg_cpu, max_cpu = update_values(cpu, record[8], record[5], record[11], number_of_samples)
+		total_send_BW,avg_send_BW, max_send_BW = update_values(send_BW, record[9], record[6], record[12], number_of_samples)
+		total_recv_BW,avg_recv_BW, max_recv_BW = update_values(recv_BW, record[10], record[7], record[13], number_of_samples)
+		total_pctMem,avg_pctMem, max_pctMem = update_values(pctMem, record[17], record[16], record[18], number_of_samples)
+		total_phyMem,avg_phyMem, max_phyMem = update_values(phyMem, record[20], record[19], record[21], number_of_samples)
+		total_virMem,avg_virMem, max_virMem = update_values(virMem, record[23], record[22], record[24], number_of_samples)
+		total_procs,avg_procs, max_procs = update_values(procs, record[26], record[25], record[27], number_of_samples)
+		total_runprocs,avg_runprocs, max_runprocs = update_values(runprocs, record[29], record[28], record[30], number_of_samples)
 		last_update = dayTime
-		DB.UpdateDayUsage(record_id, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update)
+		DB.UpdateDayUsage(record_id, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update, avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs)
 	return max_dayUsage_id
 			
+def update_values(new_val, total, avg, max, number_of_samples):
+	# Warning: total_cpu is a sum of percentages and not a value
+	# its only use is to calculate the running average!!!
+	total = total + new_val
+	avg = total / number_of_samples
+	if max < new_val):
+		max = new_val
+	return total, avg, max
 
 def clean():
 	'''Cleans old samples from the db''' 
