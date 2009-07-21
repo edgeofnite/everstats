@@ -71,7 +71,7 @@ class RequestNode(Thread):
 		for i in range(len(tokens)):
 			#splitting the lines to ','-tokens, each token is a data about a sample, we only care about few of them.
 			sub_tokens = tokens[i].split(",")
-			if (len(sub_tokens) > SLICESTAT_MAX_INDEX)
+			if (len(sub_tokens) > SLICESTAT_MAX_INDEX):
 				sub_res = []
 				sub_res.append(sub_tokens[SLICESTAT_SLICE_NAME_INDEX])
 				sub_res.append(sub_tokens[SLICESTAT_CPU_INDEX])
@@ -224,7 +224,7 @@ def insert_nodes():
 		node_id = Origin_Nodes[node][0]
 		for slice in NODES_DATA[node]:
 			slice_id = Origin_Slices[slice[0]]
-			newDataSamples.append((max_id, slice_id, node_id, dayTime, slice[1], slice[2], slice[3], GET_NODE_LOOP_TIME, slice[4], slice[5], slice[6], slice[7]))
+			newDataSamples.append((max_id, slice_id, node_id, dayTime, slice[1], slice[2], slice[3], GET_NODE_LOOP_TIME, slice[4], slice[5], slice[6], slice[7], slice[8]))
 			max_id = max_id + 1
 			max_dayUsage_id = update_day_usage(max_dayUsage_id, node_id, slice_id, existingDayUsages[node_id][slice_id], slice, day, dayTime);
 	if (len(newDataSamples) > 0):
@@ -244,11 +244,11 @@ def update_day_usage(max_dayUsage_id, node_id, slice_id, record, slicedata, day,
 	cpu = float(slicedata[1])
 	send_BW = float(slicedata[2])
 	recv_BW = float(slicedata[3])
-	pctMem = float(slicedata[4])
-	phyMem = float(slicedata[5])
-	virMem = float(slicedata[6])
+	pctmem = float(slicedata[4])
+	phymem = float(slicedata[5])
+	virmem = float(slicedata[6])
 	procs = float(slicedata[7])
-	runProcs = float(slicedata[8])
+	runprocs = float(slicedata[8])
 
 	if record == []:
 		#id, slice_id, node_id, day, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, last_update,avg_pctmem,total_pctmem,max_pctmem,avg_phymem,total_phymem,max_phymem,avg_virmem,total_virmem,max_virmem,avg_procs,total_procs,max_procs,avg_runprocs,total_runprocs,max_runprocs
@@ -266,9 +266,9 @@ def update_day_usage(max_dayUsage_id, node_id, slice_id, record, slicedata, day,
 		total_cpu,avg_cpu, max_cpu = update_values(cpu, record[8], record[5], record[11], number_of_samples)
 		total_send_BW,avg_send_BW, max_send_BW = update_values(send_BW, record[9], record[6], record[12], number_of_samples)
 		total_recv_BW,avg_recv_BW, max_recv_BW = update_values(recv_BW, record[10], record[7], record[13], number_of_samples)
-		total_pctMem,avg_pctMem, max_pctMem = update_values(pctMem, record[17], record[16], record[18], number_of_samples)
-		total_phyMem,avg_phyMem, max_phyMem = update_values(phyMem, record[20], record[19], record[21], number_of_samples)
-		total_virMem,avg_virMem, max_virMem = update_values(virMem, record[23], record[22], record[24], number_of_samples)
+		total_pctmem,avg_pctmem, max_pctmem = update_values(pctmem, record[17], record[16], record[18], number_of_samples)
+		total_phymem,avg_phymem, max_phymem = update_values(phymem, record[20], record[19], record[21], number_of_samples)
+		total_virmem,avg_virmem, max_virmem = update_values(virmem, record[23], record[22], record[24], number_of_samples)
 		total_procs,avg_procs, max_procs = update_values(procs, record[26], record[25], record[27], number_of_samples)
 		total_runprocs,avg_runprocs, max_runprocs = update_values(runprocs, record[29], record[28], record[30], number_of_samples)
 		last_update = dayTime
@@ -280,7 +280,7 @@ def update_values(new_val, total, avg, max, number_of_samples):
 	# its only use is to calculate the running average!!!
 	total = total + new_val
 	avg = total / number_of_samples
-	if max < new_val):
+	if (max < new_val):
 		max = new_val
 	return total, avg, max
 
@@ -355,7 +355,7 @@ if __name__ == "__main__":
 
 	logFile = None
 	if (EverConf.LOGFILE != "")	:
-		logFile = open(EverConf.LOGFILE,'w')
+		logFile = open(EverConf.LOGFILE,'a')
 	
 	#setting the timeout for all http requests
 	httplib.socket.setdefaulttimeout(DEFAULT_TIMEOUT)
