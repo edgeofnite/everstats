@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090504083903) do
+ActiveRecord::Schema.define(:version => 20090721180445) do
 
   create_table "configurations", :force => true do |t|
     t.string "config_key",   :limit => 20, :default => "", :null => false
@@ -34,6 +34,21 @@ ActiveRecord::Schema.define(:version => 20090504083903) do
     t.float    "max_recv_BW",            :default => 0.0,                   :null => false
     t.integer  "number_of_samples",      :default => 0,                     :null => false
     t.datetime "last_update",            :default => '2009-01-01 00:00:00', :null => false
+    t.float    "avg_pctmem",             :default => 0.0
+    t.float    "total_pctmem",           :default => 0.0
+    t.float    "max_pctmem",             :default => 0.0
+    t.float    "avg_phymem",             :default => 0.0
+    t.integer  "total_phymem",           :default => 0
+    t.integer  "max_phymem",             :default => 0
+    t.float    "avg_virmem",             :default => 0.0
+    t.integer  "total_virmem",           :default => 0
+    t.integer  "max_virmem",             :default => 0
+    t.float    "avg_procs",              :default => 0.0
+    t.integer  "total_procs",            :default => 0
+    t.integer  "max_procs",              :default => 0
+    t.float    "avg_runprocs",           :default => 0.0
+    t.integer  "total_runprocs",         :default => 0
+    t.integer  "max_runprocs",           :default => 0
   end
 
   add_index "dayusages", ["last_update"], :name => "index_dayusages_on_last_update"
@@ -54,6 +69,11 @@ ActiveRecord::Schema.define(:version => 20090504083903) do
     t.float    "avgSendBW",      :default => 0.0, :null => false
     t.float    "avgRecvBW",      :default => 0.0, :null => false
     t.integer  "sampleInterval", :default => 0,   :null => false
+    t.float    "pctmem",         :default => 0.0
+    t.integer  "phymem",         :default => 0
+    t.integer  "virmem",         :default => 0
+    t.integer  "procs",          :default => 0
+    t.integer  "runprocs",       :default => 0
   end
 
   create_table "slicegroups", :force => true do |t|
