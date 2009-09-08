@@ -10,6 +10,7 @@ import re
 import xmlrpclib
 from threading import Thread
 
+
 EVERSTATS_SITE = EverConf.EVERSTATS_SITE
 SLICESTAT_PATH = EverConf.SLICESTAT_PATH
 SLICESTAT_PORT = EverConf.SLICESTAT_PORT
@@ -38,7 +39,7 @@ SLICESTAT_MAX_INDEX = EverConf.SLICESTAT_MAX_INDEX
 NODES = []
 NODES_DATA = {}
 
-DB = EverDB.EverDB(EverConf.EVERSTATS_USER,EverConf.SLICESTAT_PASS,EverConf.EVERSTATS_DB)
+DB = EverDB.EverDB(EverConf.EVERSTATS_USER,EverConf.SLICESTAT_PASS,EverConf.EVERSTATS_DB, EverConf.EVERSTATS_DBHOST)
 
 class RequestNode(Thread):
 	'''Handles singe Node collection thread'''
@@ -82,7 +83,7 @@ class RequestNode(Thread):
 				sub_res.append(sub_tokens[SLICESTAT_VIRMEM_INDEX])
 				sub_res.append(sub_tokens[SLICESTAT_PROCS_INDEX])
 				sub_res.append(sub_tokens[SLICESTAT_RUNPROCS_INDEX])
-			res.append(sub_res)
+				res.append(sub_res)
 		return res
 
 class NSLookup(Thread):
@@ -276,8 +277,8 @@ def update_day_usage(max_dayUsage_id, node_id, slice_id, record, slicedata, day,
 	return max_dayUsage_id
 			
 def update_values(new_val, total, avg, max, number_of_samples):
-	# Warning: total_cpu is a sum of percentages and not a value
-	# its only use is to calculate the running average!!!
+	# Warning: total_cpu, total_pctX, total_sendBW and total_recvBW are sums of percentages and not values
+	# their only use is to calculate the running averages!!!
 	total = total + new_val
 	avg = total / number_of_samples
 	if (max < new_val):
