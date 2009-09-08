@@ -16,9 +16,9 @@ class Ddict(dict):
 class EverDB:
 	'''Class that allows easy access to EverStats DB'''
 
-	def __init__(self,_user,_passwd,_db):
+	def __init__(self,_user,_passwd,_db, _host):
 		'''Connects to the Database'''
-		self.db=db = MySQLdb.connect(user=_user,passwd=_passwd,db=_db)
+		self.db=db = MySQLdb.connect(user=_user,passwd=_passwd,db=_db,host=_host)
 		self.c = self.db.cursor()
 
 	def GetMaxID(self, table):
@@ -164,7 +164,7 @@ class EverDB:
 		
 if __name__ == "__main__":
 	'''Load basic configurations and run some tests'''
-	DB = EverDB(EverConf.EVERSTATS_USER,EverConf.SLICESTAT_PASS,EverConf.EVERSTATS_DB)
+	DB = EverDB(EverConf.EVERSTATS_USER, EverConf.SLICESTAT_PASS,EverConf.EVERSTATS_DB, EverConf.EVERSTATS_DBHOST)
 	import pdb
 	pdb.set_trace()
 	existingDayUsages = DB.GetAllDayUsages("2009-04-26")

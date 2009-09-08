@@ -1,6 +1,7 @@
 #EVERSTATS_DB = "everstatsdb"
 EVERSTATS_DB = "planetstatsdb"
 EVERSTATS_USER = "everstats"
+EVERSTATS_DBHOST = "127.0.0.1"
 SLICESTAT_PASS = "password"
 
 LOGFILE = "EverLog.log"
@@ -31,7 +32,7 @@ SLICESTAT_RUNPROCS_INDEX = 14 # Running Processes
 SLICESTAT_MAX_INDEX = 14 # last index that we care about
 
 DEF_SLICE_GROUP_ID = 1 #Default value for the slice group
-DAYS_TO_KEEP_SAMPLES_BACK = 5 #Default time to keep samples
+DAYS_TO_KEEP_SAMPLES_BACK = 2 #Default time to keep samples
 
 MAX_QUERY_SIZE = 1000 #max allowed size for 1 insert query into database (for too many lines the update will fail)
 
