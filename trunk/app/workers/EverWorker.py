@@ -285,6 +285,14 @@ def update_values(new_val, total, avg, max, number_of_samples):
 		max = new_val
 	return total, avg, max
 
+def update_dayusagesummaries():
+	'''We update yesterday's data just in case the date rolled over.
+	   In this way, both values are guarenteed to be correct '''
+	today = datetime.date.today()
+	yesterday = today - datetime.timedelta(days=1)
+	DB.UpdateDayUsageSummaries(yesterday.isoformat())
+	DB.UpdateDayUsageSummaries(today.isoformat())
+
 def clean():
 	'''Cleans old samples from the db''' 
 	lt = time.localtime(time.time() - EverConf.DAYS_TO_KEEP_SAMPLES_BACK*24*60*60)
@@ -304,6 +312,7 @@ def Run():
 		PrintMe(logFile,  "Start  Update nodes at: "+time.asctime())
 		update_nodes_time = time.time()
 		update_nodes()
+		update_dayusagesummaries()
 		PrintMe(logFile, "Finish Update nodes at: "+time.asctime())
 		PrintMe(logFile, "Found total "+str(len(NODES))+" nodes.")
 		if (len(NODES) == 0):

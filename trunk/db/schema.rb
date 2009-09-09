@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090721180445) do
+ActiveRecord::Schema.define(:version => 20090827083222) do
 
   create_table "configurations", :force => true do |t|
     t.string "config_key",   :limit => 20, :default => "", :null => false
@@ -52,6 +52,37 @@ ActiveRecord::Schema.define(:version => 20090721180445) do
   end
 
   add_index "dayusages", ["last_update"], :name => "index_dayusages_on_last_update"
+
+  create_table "dayusagesummaries", :force => true do |t|
+    t.integer "slice_id",               :default => 0,   :null => false
+    t.integer "node_id",                :default => 0,   :null => false
+    t.date    "day",                                     :null => false
+    t.integer "nitems",                 :default => 0,   :null => false
+    t.integer "total_activity_minutes", :default => 0,   :null => false
+    t.float   "avg_cpu",                :default => 0.0, :null => false
+    t.float   "avg_send_BW",            :default => 0.0, :null => false
+    t.float   "avg_recv_BW",            :default => 0.0, :null => false
+    t.float   "total_cpu",              :default => 0.0, :null => false
+    t.float   "total_send_BW",          :default => 0.0, :null => false
+    t.float   "total_recv_BW",          :default => 0.0, :null => false
+    t.float   "max_cpu",                :default => 0.0, :null => false
+    t.float   "max_send_BW",            :default => 0.0, :null => false
+    t.float   "max_recv_BW",            :default => 0.0, :null => false
+    t.integer "number_of_samples",      :default => 0,   :null => false
+    t.float   "avg_pctmem",             :default => 0.0
+    t.float   "max_pctmem",             :default => 0.0
+    t.float   "avg_phymem",             :default => 0.0
+    t.integer "max_phymem",             :default => 0
+    t.float   "avg_virmem",             :default => 0.0
+    t.integer "max_virmem",             :default => 0
+    t.float   "avg_procs",              :default => 0.0
+    t.integer "max_procs",              :default => 0
+    t.float   "avg_runprocs",           :default => 0.0
+    t.integer "max_runprocs",           :default => 0
+  end
+
+  add_index "dayusagesummaries", ["day"], :name => "index_dayusagesummaries_on_day"
+  add_index "dayusagesummaries", ["node_id", "slice_id"], :name => "index_dayusagesummaries_on_node_id_and_slice_id"
 
   create_table "nodes", :force => true do |t|
     t.string  "hostname",         :limit => 100, :default => "",   :null => false

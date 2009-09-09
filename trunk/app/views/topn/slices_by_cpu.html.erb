@@ -38,7 +38,7 @@ TableKit.options.rowOddClass = "tableoddrow";
  <% @dayusages .each do |item| %>
   <tr>
     <td align="left"><%= link_to item.slice.name, :controller => "stats", :action => "singlesliceview", :id => item.slice.id %></td>
-    <td align="right"> <%= item.node_id %> </td>
+    <td align="right"> <%= item.nitems %> </td>
     <td align="right"> <%= "%.2f" % (item.total_cpu.to_f/60) %> </td>
     <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
     <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
