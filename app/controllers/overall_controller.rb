@@ -39,10 +39,17 @@ class OverallController < ApplicationController
     xaxis = XAxis.new
     # grid line and tick every 10
     xaxis.set_range(0, maxx+1, (maxx+1)/10)
-    xaxis.set_steps(86400)
+    xaxis.set_steps(((maxx+1)/20).floor())
+    oklabels = ((maxx + 1)/20).floor()
+    nlabel = 0
     labels = []
     startDate.step(endDate, 86400) {|val|
-      labels << XAxisLabel.new(Time.at(val).strftime("%b %d %Y"),'#000000', 11, 90)
+      if (nlabel % oklabels == 0) 
+        labels << XAxisLabel.new(Time.at(val).strftime("%b %d %Y"),'#000000', 11, 90)
+      else
+        labels << XAxisLabel.new("",'#000000', 11, 90)
+      end
+      nlabel += 1
     }
     xaxis.set_labels(labels)
     chart.set_x_axis(xaxis)
