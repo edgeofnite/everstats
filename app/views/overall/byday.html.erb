@@ -1,0 +1,62 @@
+<div id="content">
+<h2>Everstats - Overall Usages by day</h2>
+
+<%= @charts.first.js_open_flash_chart_object("my_chart_js_1", 900,400,ActionController::Base.relative_url_root + '/') %>
+    <br/><br/>
+ <%= @charts[0].link_to_ofc_load("Nodes and Slices", "my_chart_js_1") %>
+ || 
+ <%= @charts[1].link_to_ofc_load("CPU Usage", "my_chart_js_1") %>
+ || 
+ <%= @charts[2].link_to_ofc_load("Avg CPU Usage", "my_chart_js_1") %>
+ || 
+ <%= @charts[3].link_to_ofc_load("Avg Network Usage", "my_chart_js_1") %>
+ || 
+ <%= @charts[4].link_to_ofc_load("Total Network Usage", "my_chart_js_1") %>
+<br/>
+<br/>
+
+<script>
+TableKit.options.rowEvenClass = "tableevenrow";
+TableKit.options.rowOddClass = "tableoddrow";
+</script>
+<table class="sortable" border="0" cellspacing="1">
+ <thead>
+ <tr class="tablehead">
+  <td width="12%"></td>
+  <td width="8%"></td>
+  <td width="8%"></td>
+  <td width="8%"></td>
+  <td colspan=2 width="16%"><p align="center">% CPU</td>
+  <td colspan=2 width="16%"><p align="center">Sending Bandwidth</td>
+  <td colspan=2 width="16%"><p align="center">Receiving Bandwidth</td>
+ </tr>
+ <tr class="tablesubhead">
+  <td width="12%"><p align="center">Date</td>
+  <td width="8%"><p align="center">#Nodes</td>
+  <td width="8%" class="number"><p align="center">#Slices</td>
+  <td width="8%" class="number"><p align="center"> Avg. Slices per node</td>
+  <td class="number"><p align="center">Estimated Non-Idle CPU Hours</td>
+  <td class="number"><p align="center">Avg</td>
+  <td class="number"><p align="center">Avg (Kbps)</td>
+  <td class="number"><p align="center">Total (KB)</td>
+  <td class="number"><p align="center">Avg (Kbps)</td>
+  <td class="number"><p align="center">Total (KB)</td>
+ </tr>
+ </thead>
+ <% @days.each do |day| %>
+  <tr>
+    <td align="left">  <%= day %> </td>
+    <td align="right"> <%= @nodes[day] %> </td>
+    <td align="right"> <%= @slices[day] %> </td>
+    <td align="right"> <%= @deployedslices[day] %> </td>
+    <td align="right"> <%= "%.2f" % (@totalCPU[day]/60) %> </td>
+    <td align="right"> <%= "%.2f" % @avgCPU[day] %></td>
+   <td align="right"> <%= "%.2f" % (@avgSendBW[day]/1024.0) %> </td>
+   <td align="right"> <%= "%.2f" % (@totalSendBW[day]/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % (@avgRecvBW[day]/1024.0) %> </td>
+   <td align="right"> <%= "%.2f" % (@totalRecvBW[day]/1024.0) %> </td>
+  </tr>
+ <% end %>
+</table>
+
+</div>
