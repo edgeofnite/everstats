@@ -89,7 +89,7 @@ class OverallController < ApplicationController
     totalcpu = {}
     totalcpu["Total CPU"] = []
     avgcpu = {}
-    avgcpu["Total CPU"] = []
+    avgcpu["Average CPU"] = []
     avgbw = {}
     avgbw["Sending"] = []
     avgbw["Receiving"] = []
@@ -102,7 +102,7 @@ class OverallController < ApplicationController
       resources["unique slices"] << ScatterValue.new((day - startDayCivil), @slices[day])
       resources["avg deployed slices"] << ScatterValue.new((day - startDayCivil), @deployedslices[day])
       totalcpu["Total CPU"] << ScatterValue.new((day - startDayCivil), @totalCPU[day])
-      avgcpu["Total CPU"] << ScatterValue.new((day - startDayCivil), @avgCPU[day])
+      avgcpu["Average CPU"] << ScatterValue.new((day - startDayCivil), @avgCPU[day])
       avgbw["Sending"] << ScatterValue.new((day - startDayCivil), @avgSendBW[day])
       avgbw["Receiving"] << ScatterValue.new((day - startDayCivil), @avgRecvBW[day])
       totalbw["Sending"] << ScatterValue.new((day - startDayCivil), @totalSendBW[day])
