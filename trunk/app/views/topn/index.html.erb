@@ -66,7 +66,6 @@
 
 <h2>System Wide Activity</h2>
 <% form_tag(:controller => "overall", :action => "byday", :method => "post") do %>
-<input type="submit" value="submit"><br>
 <p><b>Please choose the period to display</b></p>
 <p>
 From: <%= select_date Date.today, :prefix => :start_date %>  To: <%= select_date Date.today, :prefix => :end_date %>

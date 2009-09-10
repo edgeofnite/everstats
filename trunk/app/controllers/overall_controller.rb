@@ -71,14 +71,14 @@ class OverallController < ApplicationController
     @slices = Dayusagesummary.calculate(:count, :node_id, :group => :day, :conditions => "node_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
     @deployedslices = Dayusagesummary.calculate(:avg, :nitems, :group => :day, :conditions => "slice_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
 
-    @totalCPU = Dayusagesummary.calculate(:sum, :total_cpu, :group => :day, :conditions => "node_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
-    @avgCPU = Dayusagesummary.calculate(:avg, :avg_cpu, :group => :day, :conditions => "node_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
+    @totalCPU = Dayusagesummary.calculate(:sum, :total_cpu, :group => :day, :conditions => "slice_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
+    @avgCPU = Dayusagesummary.calculate(:avg, :avg_cpu, :group => :day, :conditions => "slice_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
 
-    @avgSendBW = Dayusagesummary.calculate(:sum, :avg_send_BW, :group => :day, :conditions => "node_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
-    @avgRecvBW = Dayusagesummary.calculate(:sum, :avg_recv_BW, :group => :day, :conditions => "node_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
+    @avgSendBW = Dayusagesummary.calculate(:sum, :avg_send_BW, :group => :day, :conditions => "slice_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
+    @avgRecvBW = Dayusagesummary.calculate(:sum, :avg_recv_BW, :group => :day, :conditions => "slice_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
 
-    @totalSendBW = Dayusagesummary.calculate(:sum, :total_send_BW, :group => :day, :conditions => "node_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
-    @totalRecvBW = Dayusagesummary.calculate(:sum, :total_recv_BW, :group => :day, :conditions => "node_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
+    @totalSendBW = Dayusagesummary.calculate(:sum, :total_send_BW, :group => :day, :conditions => "slice_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
+    @totalRecvBW = Dayusagesummary.calculate(:sum, :total_recv_BW, :group => :day, :conditions => "slice_id = -1", :having => "day > '#{startDay}' and day < '#{endDay}'")
 
     @days = @nodes.keys
 
