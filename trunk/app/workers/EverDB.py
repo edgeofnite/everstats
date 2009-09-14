@@ -163,15 +163,17 @@ class EverDB:
 		return data
 
 	def UpdateDayUsageSummaries(self, day):
+		'''Calculate summary values.  The avg_cpu for nodes (slice_id = -1) is the sum of the averages per slice for that day.  total_cpu is the sum of the average CPU loads (as a percentage) * the total activity minutes / 100.  For each slice (node_id = -1), the
+		   average CPU is the average of the values on each node.'''
 		self.c.execute("delete from dayusagesummaries where day = '%s'" % day)
 		self.c.execute('''insert into dayusagesummaries (slice_id, node_id, day, nitems, total_activity_minutes, avg_cpu, avg_send_BW, avg_recv_BW, total_cpu, total_send_BW, total_recv_BW, max_cpu, max_send_BW, max_recv_BW, number_of_samples, avg_pctmem,  max_pctmem, avg_phymem, max_phymem, avg_virmem, max_virmem, avg_procs, max_procs, avg_runprocs, max_runprocs)
           select -1, node_id, day, 
               count(distinct slice_id),
               sum(total_activity_minutes),
-              avg(avg_cpu),
+              sum(avg_cpu),
               avg(avg_send_BW),
               avg(avg_recv_BW),
-              sum(total_activity_minutes)*sum(total_cpu)/sum(number_of_samples)/100 as total_cpu,
+              sum(total_activity_minutes)*sum(avg_cpu)/100 as total_cpu,
               60*sum(total_activity_minutes)*sum(total_send_BW)/sum(number_of_samples) as total_send_BW,
               60*sum(total_activity_minutes)*sum(total_recv_BW)/sum(number_of_samples) as total_recv_BW,
               max(max_cpu),
