@@ -1,10 +1,19 @@
 <div id="content">
-<h2>Everstats - Top <%=h @count %> slices by Sending Bandwidth</h2>
+<h2>Everstats - Top <%=h @count %> Nodes </h2>
 
-<%= @chart.js_open_flash_chart_object("my_chart_js_1", 900,400,ActionController::Base.relative_url_root + '/') %>
+<%= @charts.first.js_open_flash_chart_object("my_chart_js_1", 900,400,ActionController::Base.relative_url_root + '/') %>
+    <br/><br/>
+ <%= @charts[0].link_to_ofc_load("CPU", "my_chart_js_1") %>
+ || 
+ <%= @charts[1].link_to_ofc_load("Sending BW", "my_chart_js_1") %>
+ || 
+ <%= @charts[2].link_to_ofc_load("Incoming BW", "my_chart_js_1") %>
+<br/>
+<br/>
 
 <br/>
 <br/>
+
 <script>
 TableKit.options.rowEvenClass = "tableevenrow";
 TableKit.options.rowOddClass = "tableoddrow";
@@ -36,17 +45,17 @@ TableKit.options.rowOddClass = "tableoddrow";
 
  <% @dayusages .each do |item| %>
   <tr>
-    <td align="left"><%= link_to item.slice.name, :controller => "stats", :action => "singlesliceview", :id => item.slice.id %></td>
-    <td align="right"> <%= item.node_id %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_cpu.to_f/60) %> </td>
+    <td align="left"><%= link_to item.node.hostname, :controller => "stats", :action => "singlenodeview", :id => item.node.id %></td>
+    <td align="right"> <%= item.nitems %> </td>
+    <td align="right"> <%= "%.2f" % item.total_cpu %> </td>
     <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
     <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
-    <td align="right"> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <b><%= "%.2f" % (item.total_send_BW.to_f/1024.0) %> </b> </td>
-    <td align="right"> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_recv_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_recv_BW %> </td>
   </tr>
  <% end %>
 </table>

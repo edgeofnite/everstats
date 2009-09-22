@@ -32,15 +32,15 @@ TableKit.options.rowOddClass = "tableoddrow";
  <% @past_week_node_usages .each do |item| %>
   <tr>
     <td align="left"><%= link_to item.slice.name, :controller => "stats", :action => "singlesliceview", :id => item.slice.id %></td>
-    <td align="right"> <%= "%.2f" % (item.total_cpu.to_f/60) %> </td>
+    <td align="right"> <%= "%.2f" % item.total_cpu %> </td>
     <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
     <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
-    <td align="right"> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_recv_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_recv_BW %> </td>
   </tr>
  <% end %>
 </table>
@@ -73,15 +73,15 @@ TableKit.options.rowOddClass = "tableoddrow";
  <% @past_month_node_usages .each do |item| %>
   <tr>
     <td align="left"><%= link_to item.slice.name, :controller => "stats", :action => "singlesliceview", :id => item.slice.id %></td>
-    <td align="right"> <%= "%.2f" % (item.total_cpu.to_f/60) %> </td>
+    <td align="right"> <%= "%.2f" % item.total_cpu %> </td>
     <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
     <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
-    <td align="right"> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_recv_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_recv_BW %> </td>
   </tr>
  <% end %>
 </table>
@@ -114,15 +114,15 @@ TableKit.options.rowOddClass = "tableoddrow";
  <% @past_year_node_usages .each do |item| %>
   <tr>
     <td align="left"><%= link_to item.slice.name, :controller => "stats", :action => "singlesliceview", :id => item.slice.id %></td>
-    <td align="right"> <%= "%.2f" % (item.total_cpu.to_f/60) %> </td>
+    <td align="right"> <%= "%.2f" % item.total_cpu %> </td>
     <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
     <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
-    <td align="right"> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_recv_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_recv_BW %> </td>
   </tr>
  <% end %>
 </table>

@@ -10,14 +10,15 @@ TableKit.options.rowOddClass = "tableoddrow";
  <thead>
  <tr class="tablehead">
   <td width="20%"></td>
-  <td width="16%"></td>
+  <td width="10%"></td>
   <td colspan=2 width="16%"><p align="center"><i><b>% CPU</b></i></td>
   <td colspan=3 width="16%"><p align="center"><i><b>Sending Bandwidth</b></i></td>
   <td colspan=3 width="16%"><p align="center"><i><b>Receiving Bandwidth</b></i></td>
+  <td colspan=2 width="10%"><p align="center">Procs</td>
  </tr>
  <tr class="tablesubhead">
   <td width="20%"><p align="center"><i><b>Node</b></i></td>
-  <td width="16%" class="number"><p align="center"><i><b>Total Active Time (Hours across all slices)</b></i></td>
+  <td width="10%" class="number"><p align="center"><i><b>Total Active Time (Hours across all slices)</b></i></td>
   <td class="number"><p align="center"><i><b>Avg</b></i></td>
   <td class="number"><p align="center"><i><b>Max</b></i></td>
   <td class="number"><p align="center"><i><b>Avg (Kbps)</b></i></td>
@@ -26,21 +27,25 @@ TableKit.options.rowOddClass = "tableoddrow";
   <td class="number"><p align="center"><i><b>Avg (Kbps)</b></i></td>
   <td class="number"><p align="center"><i><b>Max (Kbps)</b></i></td>
   <td class="number"><p align="center"><i><b>Total (KB)</b></i></td>
+  <td class="number" width="5%"><p align="center">Total</td>
+  <td class="number" width="5%"><p align="center">Running</td>
  </tr>
  </thead>
 
  <% @past_week_node_usages .each do |item| %>
   <tr>
     <td align="left"><%= link_to item.node.hostname, :controller => "stats", :action => "singlenodeview", :id => item.node.id %></td>
-    <td align="right"> <%= "%.2f" % (item.total_cpu.to_f/60) %> </td>
+    <td align="right"> <%= "%.2f" % item.total_cpu %> </td>
     <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
     <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
-    <td align="right"> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_recv_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_procs %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_runprocs %> </td>
   </tr>
  <% end %>
 </table>
@@ -51,14 +56,15 @@ TableKit.options.rowOddClass = "tableoddrow";
  <thead>
  <tr class="tablehead">
   <td width="20%"></td>
-  <td width="16%"></td>
+  <td width="10%"></td>
   <td colspan=2 width="16%"><p align="center"><i><b>% CPU</b></i></td>
   <td colspan=3 width="16%"><p align="center"><i><b>Sending Bandwidth</b></i></td>
   <td colspan=3 width="16%"><p align="center"><i><b>Receiving Bandwidth</b></i></td>
+  <td colspan=2 width="10%"><p align="center">Procs</td>
  </tr>
  <tr class="tablesubhead">
   <td width="20%"><p align="center"><i><b>Node</b></i></td>
-  <td width="16%" class="number"><p align="center"><i><b>Total Active Time (Hours across all slices)</b></i></td>
+  <td width="10%" class="number"><p align="center"><i><b>Total Active Time (Hours across all slices)</b></i></td>
   <td class="number"><p align="center"><i><b>Avg</b></i></td>
   <td class="number"><p align="center"><i><b>Max</b></i></td>
   <td class="number"><p align="center"><i><b>Avg (Kbps)</b></i></td>
@@ -67,21 +73,25 @@ TableKit.options.rowOddClass = "tableoddrow";
   <td class="number"><p align="center"><i><b>Avg (Kbps)</b></i></td>
   <td class="number"><p align="center"><i><b>Max (Kbps)</b></i></td>
   <td class="number"><p align="center"><i><b>Total (KB)</b></i></td>
+  <td class="number" width="5%"><p align="center">Total</td>
+  <td class="number" width="5%"><p align="center">Running</td>
  </tr>
  </thead>
 
  <% @past_month_node_usages .each do |item| %>
   <tr>
     <td align="left"><%= link_to item.node.hostname, :controller => "stats", :action => "singlenodeview", :id => item.node.id %></td>
-    <td align="right"> <%= "%.2f" % (item.total_cpu.to_f/60) %> </td>
+    <td align="right"> <%= "%.2f" % item.total_cpu %> </td>
     <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
     <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
-    <td align="right"> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_recv_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_procs %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_runprocs %> </td>
   </tr>
  <% end %>
 </table>
@@ -92,14 +102,15 @@ TableKit.options.rowOddClass = "tableoddrow";
  <thead>
  <tr class="tablehead">
   <td width="20%"></td>
-  <td width="16%"></td>
+  <td width="10%"></td>
   <td colspan=2 width="16%"><p align="center"><i><b>% CPU</b></i></td>
   <td colspan=3 width="16%"><p align="center"><i><b>Sending Bandwidth</b></i></td>
   <td colspan=3 width="16%"><p align="center"><i><b>Receiving Bandwidth</b></i></td>
+  <td colspan=2 width="10%"><p align="center">Procs</td>
  </tr>
  <tr class="tablesubhead">
   <td width="20%"><p align="center"><i><b>Node</b></i></td>
-  <td width="16%" class="number"><p align="center"><i><b>Total Active Time (Hours across all slices)</b></i></td>
+  <td width="10%" class="number"><p align="center"><i><b>Total Active Time (Hours across all slices)</b></i></td>
   <td class="number"><p align="center"><i><b>Avg</b></i></td>
   <td class="number"><p align="center"><i><b>Max</b></i></td>
   <td class="number"><p align="center"><i><b>Avg (Kbps)</b></i></td>
@@ -108,21 +119,25 @@ TableKit.options.rowOddClass = "tableoddrow";
   <td class="number"><p align="center"><i><b>Avg (Kbps)</b></i></td>
   <td class="number"><p align="center"><i><b>Max (Kbps)</b></i></td>
   <td class="number"><p align="center"><i><b>Total (KB)</b></i></td>
+  <td class="number" width="5%"><p align="center">Total</td>
+  <td class="number" width="5%"><p align="center">Running</td>
  </tr>
  </thead>
 
  <% @past_year_node_usages .each do |item| %>
   <tr>
     <td align="left"><%= link_to item.node.hostname, :controller => "stats", :action => "singlenodeview", :id => item.node.id %></td>
-    <td align="right"> <%= "%.2f" % (item.total_cpu.to_f/60) %> </td>
+    <td align="right"> <%= "%.2f" % item.total_cpu %> </td>
     <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
     <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
-    <td align="right"> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_recv_BW.to_f/1024.0) %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_procs %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_runprocs %> </td>
   </tr>
  <% end %>
 </table>

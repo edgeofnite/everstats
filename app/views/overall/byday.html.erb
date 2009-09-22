@@ -48,13 +48,13 @@ TableKit.options.rowOddClass = "tableoddrow";
     <td align="left">  <%= day %> </td>
     <td align="right"> <%= @nodes[day] %> </td>
     <td align="right"> <%= @slices[day] %> </td>
-    <td align="right"> <%= @deployedslices[day] %> </td>
-    <td align="right"> <%= "%.2f" % (@totalCPU[day]/60) %> </td>
+    <td align="right"> <%= "%.2f" % @deployedslices[day] %> </td>
+    <td align="right"> <%= "%.2f" % @totalCPU[day] %> </td>
     <td align="right"> <%= "%.2f" % @avgCPU[day] %></td>
-   <td align="right"> <%= "%.2f" % (@avgSendBW[day]/1024.0) %> </td>
-   <td align="right"> <%= "%.2f" % (@totalSendBW[day]/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (@avgRecvBW[day]/1024.0) %> </td>
-   <td align="right"> <%= "%.2f" % (@totalRecvBW[day]/1024.0) %> </td>
+   <td align="right"> <%= "%.2f" % @avgSendBW[day] %> </td>
+   <td align="right"> <%= "%.2f" % @totalSendBW[day] %> </td>
+    <td align="right"> <%= "%.2f" % @avgRecvBW[day] %> </td>
+   <td align="right"> <%= "%.2f" % @totalRecvBW[day] %> </td>
   </tr>
  <% end %>
 </table>
