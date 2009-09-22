@@ -1,7 +1,15 @@
 <div id="content">
-<h2>Everstats - Top <%=h @count %> nodes by Receiving Bandwidth</h2>
+<h2>Everstats - Top <%=h @count %> Slices</h2>
 
-<%= @chart.js_open_flash_chart_object("my_chart_js_1", 900,400,ActionController::Base.relative_url_root + '/') %>
+<%= @charts.first.js_open_flash_chart_object("my_chart_js_1", 900,400,ActionController::Base.relative_url_root + '/') %>
+    <br/><br/>
+ <%= @charts[0].link_to_ofc_load("CPU", "my_chart_js_1") %>
+ || 
+ <%= @charts[1].link_to_ofc_load("Sending BW", "my_chart_js_1") %>
+ || 
+ <%= @charts[2].link_to_ofc_load("Incoming BW", "my_chart_js_1") %>
+<br/>
+<br/>
 
 <br/>
 <br/>
@@ -16,12 +24,12 @@ TableKit.options.rowOddClass = "tableoddrow";
   <td width="20%"></td>
   <td width="8%"></td>
   <td width="16%"></td>
-  <td colspan=2 width="10%"><p align="center">% CPU</td>
+  <td colspan=2 width="16%"><p align="center">% CPU</td>
   <td colspan=3 width="16%"><p align="center">Sending Bandwidth</td>
   <td colspan=3 width="16%"><p align="center">Receiving Bandwidth</td>
  </tr>
  <tr class="tablesubhead">
-  <td width="20%"><p align="center">Node</td>
+  <td width="20%"><p align="center">Slice</td>
   <td width="8%" class="number"><p align="center">#Slices</td>
   <td width="16%" class="number"><p align="center">Estimated Non-Idle CPU Hours</td>
   <td class="number"><p align="center">Avg</td>
@@ -37,19 +45,18 @@ TableKit.options.rowOddClass = "tableoddrow";
 
  <% @dayusages .each do |item| %>
   <tr>
-    <td align="left"><%= link_to item.node.hostname, :controller => "stats", :action => "singlenodeview", :id => item.node.id %></td>
-    <td align="right"> <%= item.slice_id %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_cpu.to_f/60) %> </td>
+    <td align="left"><%= link_to item.slice.name, :controller => "stats", :action => "singlesliceview", :id => item.slice.id %></td>
+   <td align="right"> <%= item.nitems %> </td>
+    <td align="right"> <%= "%.2f" % item.total_cpu %> </td>
     <td align="right"> <%= "%.2f" % item.avg_cpu %></td>
     <td align="right"> <%= "%.2f" % item.max_cpu %> </td> 
-    <td align="right"> <%= "%.2f" % (item.avg_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.total_send_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.avg_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <%= "%.2f" % (item.max_recv_BW.to_f/1024.0) %> </td>
-    <td align="right"> <b> <%= "%.2f" % (item.total_recv_BW.to_f/1024.0) %> </b></td>
+    <td align="right"> <%= "%.2f" % item.avg_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_send_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.avg_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.max_recv_BW %> </td>
+    <td align="right"> <%= "%.2f" % item.total_recv_BW %> </td>
   </tr>
  <% end %>
 </table>
-
 </div>
