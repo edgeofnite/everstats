@@ -77,11 +77,11 @@ class TopnController < ApplicationController
       sendBW << PieValue.new(item.total_send_BW,item.slice.name)
       recvBW << PieValue.new(item.total_recv_BW,item.slice.name)
     end
-    title = Title.new("Top %s nodes by CPU for the past %s days" % [@count, @days])
+    title = Title.new("Top %s slices by CPU for the past %s days" % [@count, @days])
     @cpuchart = doPieChart(title, cpu, '#label# - #val# CPU Hours')
-    title = Title.new("Top %s nodes by Total Sending Bandwidth for the past %s days" % [@count, @days])
+    title = Title.new("Top %s slices by Total Sending Bandwidth for the past %s days" % [@count, @days])
     @sendBWchart = doPieChart(title, sendBW, '#label# - #val# Kb')
-    title = Title.new("Top %s nodes by Total Incoming Bandwidth for the past %s days" % [@count, @days])
+    title = Title.new("Top %s slices by Total Incoming Bandwidth for the past %s days" % [@count, @days])
     @recvBWchart = doPieChart(title, recvBW, '#label# - #val# Kb')
 
     @charts = [@cpuchart, @sendBWchart, @recvBWchart]
