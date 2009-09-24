@@ -146,7 +146,7 @@ module Excel
     	                xm.Row do
     	                  for column in type.columns do
     	                    xm.Cell do
-    	                     xm.Data record.send(column.name), 'ss:Type' => 'String'
+    	                     xm.Data record.send(column.name), 'ss:Type' => (record.send(column.name).to_s.match(/\A[+-]?\d+?(\.\d+)?(e[+-]\d+)?\Z/) == nil ? 'String' : 'Number')
     	                    end
     	                  end
     	                end
@@ -181,7 +181,7 @@ module Excel
 	           xm.Row do 
     	           for value in item.values
     	             xm.Cell do
-    	               xm.Data value, 'ss:Type' => 'String'
+    	               xm.Data value, 'ss:Type' => (value.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? 'String' : 'Number')
     	             end
     	           end
 	           end
