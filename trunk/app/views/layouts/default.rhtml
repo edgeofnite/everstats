@@ -15,6 +15,7 @@
     <div id="header-logo-right">
     <a href="http://onelab.eu"><%= image_tag ("onelab2-logo.png") %></a>
     </div>
+   <% cache 'statusarea', 15.minutes.from_now do %>
     <div id="statusarea">
 	<p><script type="text/javascript">
 		var d = new Date();
@@ -26,7 +27,7 @@
 	  <%= "%0.2f" % Dayusage.day_recv_GB_usage %> GB In, <%= "%0.2f" % Dayusage.day_send_GB_usage %> GB out
       </p>
     </div>
-
+   <% end %>
     <div id="topmenu">
       <ul>
         <li><%= link_to "<span>Home</span>", {:controller => "main"}, :class=> ( controller.controller_name == "main" ? "highlight" : "nohighlight") %></li>
