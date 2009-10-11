@@ -14,6 +14,19 @@
  <%= @charts[4].link_to_ofc_load("Total Network Usage", "my_chart_js_1") %>
 <br/>
 <br/>
+<%= link_to "Excel", :controller => "overall", :action => "byday", :params => params, :format => "xls" %>
+
+<% form_tag(:controller => "overall", :action => "byday", :method => "post") do %>
+<p><b>Please choose the period to display</b></p>
+<p>
+From: <%= select_date Date.today, :prefix => :start_date %>  To: <%= select_date Date.today, :prefix => :end_date %>
+</p>
+<p>
+Excluding slices with names: (e.g. <i>princeton_co%</i>: <%= text_field_tag "exclude_slices", "" %>
+</p>
+<br>
+<input type="submit" value="submit">
+<% end %>
 
 <script>
 TableKit.options.rowEvenClass = "tableevenrow";
