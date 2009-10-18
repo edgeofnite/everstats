@@ -4,7 +4,7 @@ class StatsController < ApplicationController
     def nodeview
         @page_title = "Node Activity"
 
-        basic_query_str = '''select 0 as id, -1 as slice_id, node_id, curdate() as day, avg(number_of_samples) as number_of_samples,
+        basic_query_str = '''select 0 as id, -1 as slice_id, node_id, curdate() as day, sum(number_of_samples) as number_of_samples,
         avg(nitems) as nitems, SUM(total_activity_minutes) as total_activity_minutes, 
         sum(total_send_BW) as total_send_BW, sum(total_recv_BW) as total_recv_BW, 
         avg(avg_cpu) as avg_cpu, sum(total_cpu) as total_cpu,
@@ -50,7 +50,7 @@ class StatsController < ApplicationController
             @slices_display = "all slices"
         end
         
-        basic_query_str = '''select 0 as id, -1 as node_id, curdate() as day, avg(number_of_samples) as number_of_samples, slice_id,
+        basic_query_str = '''select 0 as id, -1 as node_id, curdate() as day, sum(number_of_samples) as number_of_samples, slice_id,
         avg(nitems) as nitems, sum(total_send_BW) as total_send_BW, 
 	sum(total_activity_minutes) as total_activity_minutes, avg(avg_cpu) as avg_cpu, sum(total_cpu) as total_cpu,
         sum(total_send_BW) as total_send_BW, sum(total_recv_BW) as total_recv_BW, 
