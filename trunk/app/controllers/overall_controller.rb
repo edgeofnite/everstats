@@ -145,8 +145,8 @@ class OverallController < ApplicationController
           item["avg deployed slices"] = @deployedslices[day]
           item["Total CPU"] = @totalCPU[day]
           item["Average CPU"] = @avgCPU[day]
-          item["Sending"] = @avgSendBW[day]
-          item["Receiving"] =@avgRecvBW[day]
+          item["Average Sending"] = @avgSendBW[day]
+          item["Average Receiving"] =@avgRecvBW[day]
           item["Sending"] = @totalSendBW[day]
           item["Receiving"] = @totalRecvBW[day]
           days << item
