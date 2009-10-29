@@ -160,6 +160,9 @@
 <p><input name="commit" type="submit" value="Submit" />
 </form>
 
-
- <%= @display %>
+<script>
+TableKit.options.rowEvenClass = "tableevenrow";
+TableKit.options.rowOddClass = "tableoddrow";
+</script>
+<%= @display %>
 </div>
