@@ -1,7 +1,7 @@
 <div id="content">
 <h2>View Slices consumption and nodes usage by date range</h2>
 
-<%= form_tag 'daterangeview/' -%>
+<%= form_tag(:controller => "daterangeview",:method => "post") -%>
 
 <p><label for="from"><b>From: </b></label><select name="from_year_select">
 <option value="2008">2008</option>
