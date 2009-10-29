@@ -19,14 +19,14 @@ class DaterangeviewController < ApplicationController
                        "FROM dayusages,slices where dayusages.slice_id = slices.id " + " and dayusages.day >= '" + @from_date_str + "'" + 
                         " and dayusages.day <= '" + @to_date_str + "'" + " GROUP BY slice_id"
                 @display = @display +  "<h4>Results: slices consumption from " + @from_date_str + " to " + @to_date_str + "</h4><br>"
-                @display = @display + '<table border="1"><tr>
+                @display = @display + '<table  class="sortable" border="1"><thead><tr>
                               <td width="20%"><p align="center"><i><b>Slice</b></i></td>
-                              <td width="16%"><p align="center"><i><b>#Nodes</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Total CPU Hours (on all nodes)</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average CPU%</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
-                             </tr>'
+                              <td class="number" width="16%"><p align="center"><i><b>#Nodes</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Total CPU Hours (on all nodes)</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average CPU%</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
+                             </tr></thead>'
                results = Dayusage.find_by_sql(basic_query_str)
                results.each{ |item| 
                     @display = @display + '<tr>' + 
@@ -47,14 +47,14 @@ class DaterangeviewController < ApplicationController
                               "FROM dayusages " + " WHERE day >= '" + @from_date_str + "'" + 
                               " and day <= '" + @to_date_str + "'" + " GROUP BY node_id"
                 @display = @display +  "<h4>Results: Node usage from " + @from_date_str + " to " + @to_date_str + "</h4><br>"
-                @display = @display + '<table border="1"><tr>
+                @display = @display + '<table  class="sortable" border="1"><thead><tr>
                               <td width="20%"><p align="center"><i><b>Node</b></i></td>
-                              <td width="16%"><p align="center"><i><b>#Slices</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Total CPU Hours (sum for all slices)</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average CPU%</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
-                             </tr>'
+                              <td class="number" width="16%"><p align="center"><i><b>#Slices</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Total CPU Hours (sum for all slices)</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average CPU%</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
+                             </tr></thead>'
                 
             
                 results = Dayusage.find_by_sql(basic_query_str)
@@ -76,14 +76,14 @@ class DaterangeviewController < ApplicationController
                         " and dayusages.day <= '" + @to_date_str + "'" + " and slices.slicegroup_id= " + params["slicegroup_select"] +  " GROUP BY slice_id"
                 @display = @display +  "<h4>Results: slices consumption from " + @from_date_str + " to " + @to_date_str +  " for slice group <i>" +
                                            Slicegroup.find(params["slicegroup_select"]).name + "</i></h4><br>"
-                @display = @display + '<table border="1"><tr>
+                @display = @display + '<table  class="sortable" order="1"><thead><tr>
                               <td width="20%"><p align="center"><i><b>Slice</b></i></td>
-                              <td width="16%"><p align="center"><i><b>#Nodes</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Total CPU Hours (on all nodes)</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average CPU%</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
-                             </tr>'
+                              <td class="number" width="16%"><p align="center"><i><b>#Nodes</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Total CPU Hours (on all nodes)</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average CPU%</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
+                             </tr></thead>'
                results = Dayusage.find_by_sql(basic_query_str)
                results.each{ |item| 
                     @display = @display + '<tr>' + 
@@ -103,13 +103,13 @@ class DaterangeviewController < ApplicationController
                       @display = @display +  "<h4>Results: Slice consumption from " + @from_date_str + " to " + @to_date_str +  " for slice <i>" +
                                            Slice.find(params["slice_select"]).name + "</i></h4><br>"
                      results = Dayusage.find_by_sql(basic_query_str)
-                     @display = @display + '<table border="1"><tr>
+                     @display = @display + '<table  class="sortable" border="1"><thead><tr>
                               <td width="16%"><p align="center"><i><b>Node</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Total CPU Hours (on all nodes)</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average CPU%</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
-                             </tr>'
+                              <td class="number" width="16%"><p align="center"><i><b>Total CPU Hours (on all nodes)</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average CPU%</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
+                             </tr></thead>'
                      results.each{ |item| 
                     @display = @display + '<tr>' + 
                             '<td>' + item.node.hostname + '</td>' +
@@ -128,13 +128,13 @@ class DaterangeviewController < ApplicationController
                 @display = @display +  "<h4>Results: node usage from " + @from_date_str + " to " + @to_date_str +  " for node <i>" +
                                 Node.find(params["node_select"]).hostname + "</i></h4><br>"
                 results = Dayusage.find_by_sql(basic_query_str)
-                @display = @display + '<table border="1"><tr>
+                @display = @display + '<table  class="sortable" border="1"><thead><tr>
                               <td width="16%"><p align="center"><i><b>Slice</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Total CPU Hours (sum for all slices)</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average CPU%</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
-                              <td width="16%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
-                             </tr>'
+                              <td class="number" width="16%"><p align="center"><i><b>Total CPU Hours (sum for all slices)</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average CPU%</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average Sending BW (in Kbps)</b></i></td>
+                              <td class="number" width="16%"><p align="center"><i><b>Average Receiving BW (in Kbps) </b></i></td>
+                             </tr></thead>'
                               results.each{ |item| 
                      @display = @display + '<tr>' + 
                             '<td>' + item.slice.name + '</td>' +
