@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090914154548) do
+ActiveRecord::Schema.define(:version => 20091105124128) do
 
   create_table "configurations", :force => true do |t|
     t.string "config_key",   :limit => 20, :default => "", :null => false
