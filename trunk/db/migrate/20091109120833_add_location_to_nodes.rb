@@ -5,6 +5,8 @@ class AddLocationToNodes < ActiveRecord::Migration
     add_column :nodes, :site_id, :integer, :default => 0
     add_column :nodes, :longitude, :float, :default => 0.0
     add_column :nodes, :latitude, :float, :default => 0.0
+    Node.reset_column_information
+    self.updateTables()
   end
 
   def self.down
@@ -13,7 +15,7 @@ class AddLocationToNodes < ActiveRecord::Migration
     remove_column :nodes, :latitude
   end
 
-  def updateTables
+  def self.updateTables
     XMLRPC::Config.const_set(:ENABLE_NIL_PARSER, true)
     auth = {}
     auth['AuthMethod'] = 'anonymous'
@@ -31,11 +33,11 @@ class AddLocationToNodes < ActiveRecord::Migration
       site = n['site_id']
       (latitude, longitude) = siteHash[site]
       if !latitude.nil? && !longitude.nil?
-        Node.find_by_hostname(n['hostname'])
-        Node.site_id = site
-        Node.latitude = latitude
-        Node.longitude = longitude
-        Node.save
+        node = Node.find_by_hostname(n['hostname'])
+        node.site_id = site
+        node.latitude = latitude
+        node.longitude = longitude
+        node.save
       end
     end
     
