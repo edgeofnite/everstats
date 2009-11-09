@@ -17,7 +17,8 @@ class AddLocationToNodes < ActiveRecord::Migration
     XMLRPC::Config.const_set(:ENABLE_NIL_PARSER, true)
     auth = {}
     auth['AuthMethod'] = 'anonymous'
-    server = XMLRPC::Client.new3({:host=>'www.everlab.org',:path=>'/PLCAPI/', :proxy_host=>'wwwproxy.cs.huji.ac.il', :proxy_port=>8080, :use_ssl=>true })
+    site = Configuration.find_by_config_key("nodes_file_comp").config_value
+    server = XMLRPC::Client.new3({:host=>site,:path=>'/PLCAPI/', :proxy_host=>'wwwproxy.cs.huji.ac.il', :proxy_port=>8080, :use_ssl=>true })
 
     server = XMLRPC::Client.new2('https://www.planet-lab.eu/PLCAPI/')
     nodes = server.call("GetNodes", auth, {}, ['hostname','site_id'])
