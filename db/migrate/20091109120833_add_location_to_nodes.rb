@@ -34,10 +34,12 @@ class AddLocationToNodes < ActiveRecord::Migration
       (latitude, longitude) = siteHash[site]
       if !latitude.nil? && !longitude.nil?
         node = Node.find_by_hostname(n['hostname'])
-        node.site_id = site
-        node.latitude = latitude
-        node.longitude = longitude
-        node.save
+        unless node.nil?
+          node.site_id = site
+          node.latitude = latitude
+          node.longitude = longitude
+          node.save
+        end
       end
     end
     
