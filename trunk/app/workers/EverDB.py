@@ -83,7 +83,7 @@ class EverDB:
 	def AddNewNodes(self, nodes):
 		'''Adding new Nodes to the DB.'''
 		#id, hostname, primaryipaddress, online
-		self.AddNewData("Insert into nodes values(%s,%s,%s,%s)", nodes)
+		self.AddNewData("Insert into nodes (id, hostname, primaryipaddress, online, siteid, latitude, longitude) values(%s,%s,%s,%s,%s,%s,%s)", nodes)
 		
 	def AddNewSamples(self, samples):
 		'''Adding new Samples to the DB.'''

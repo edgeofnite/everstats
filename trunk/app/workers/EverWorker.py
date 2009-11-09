@@ -126,19 +126,22 @@ def update_nodes():
 	try:
 		auth = {'AuthMethod' : 'anonymous'}
 		api_server = xmlrpclib.ServerProxy('https://' + EVERSTATS_SITE + '/PLCAPI/', allow_none=True)
-		nodes = api_server.GetNodes(auth,{'peer_id': None},['hostname'])
+		nodes = api_server.GetNodes(auth,{'peer_id': None},['hostname', 'site_id'])
+		sites = api_server.GetSites(auth,{'peer_id': None},['site_id', 'latitude', 'longitude'])
 		NODES = [x['hostname'] for x in nodes]
-		parse_nodes_data()
+		parse_nodes_data(nodes, sites)
 	except:
 		#some error occured while connecting to the site, nothing to do.
 		PrintMe(logFile,  "Can't update nodes")
 		res = ""
 
-def parse_nodes_data():
+def parse_nodes_data(nodes, sites):
 	'''Parses nodes data, retrieving all the ip addresses of the nodes'''
 	global NODES
 	newDataNodes = []
 	max_id = DB.GetMaxIDNodes()
+	nodeSites = dict([x['hostname'],x['site_id']] for x in nodes)
+	siteData = dict([x['site_id'],[x['latitude'],x['longitude']]] for x in sites)
 
 	#filtering out the nodes we already have in the db
 	curOff = 0
@@ -156,7 +159,9 @@ def parse_nodes_data():
 		for thr in thread_list:
 			thr.join()
 			if not Origin_Nodes.has_key(thr.host):
-				newDataNodes.append((max_id, thr.host, thr.ip, 0))
+				site_id = nodeSites[thr.host]
+				[latitude, longitude] = siteData[site_id]
+				newDataNodes.append((max_id, thr.host, thr.ip, 0, site_id, latitude, longitude))
 				PrintMe(logFile, "\tInserting new Node : %s" % thr.host)
 				Origin_Nodes[thr.host] = (max_id, thr.ip, 0)
 				max_id = max_id+1
