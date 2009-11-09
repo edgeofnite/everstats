@@ -8,13 +8,13 @@ class AddLocationToNodes < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :nodes, :siteid
+    remove_column :nodes, :site_id
     remove_column :nodes, :longitude
     remove_column :nodes, :latitude
   end
 
   def updateTables
-    XMLRPC::Config::ENABLE_NIL_PARSER = true
+    XMLRPC::Config.const_set(:ENABLE_NIL_PARSER, true)
     auth = {}
     auth['AuthMethod'] = 'anonymous'
     server = XMLRPC::Client.new3({:host=>'www.everlab.org',:path=>'/PLCAPI/', :proxy_host=>'wwwproxy.cs.huji.ac.il', :proxy_port=>8080, :use_ssl=>true })
