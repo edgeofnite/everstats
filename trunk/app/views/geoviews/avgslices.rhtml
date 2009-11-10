@@ -24,9 +24,9 @@
 	  liWidth = liWidth||2;
 	  var poly = new GPolygon(points,liColor,liWidth,liOpa,fillColor,fillOpa);
 	  GEvent.addListener(poly, "click",  function() {
-             marker.openInfoWindowHtml(html);
+             poly.openInfoWindowHtml(html);
              });
-          return marker;
+          return poly;
 	}
 
         // helper function to create markers
@@ -45,19 +45,18 @@
             map.addControl(new GSmallMapControl());
             map.centerAndZoom(new GPoint(0, 0), 16);
             
-            <% @sites = @nodes.map{|n| n.site_id}.uniq
-	       @sites.each do |site|
-	          sitenodes = @nodes.select{|n| n.site_id = site}
-@nodes.each do |node| nodedata = @avgslices.select{|s| s[:node_id] == node[:id]}.first %>
-             <%if !nodedata.nil? %>
-	     <% hostname = sitenodes.first.hostname
-	        latitude = sitenodes.first.latitude
-	        longitude = sitenodes.first.longitude
-		strength = sitesnodes.inject(0){|sum, item| sum + item.nitems}
-		%>
+            <% @sites = @nodes.map{|n| n.site_id}.uniq %>
+	    <%   @sites.each do |site| %>
+	    <%     sitenodes = @nodes.select{|n| n.site_id == site} %>
+	    <%     nodedatas = sitenodes.map{|n| @avgslices.select{|s| s[:node_id] == n.id}.compact.flatten } %>
+             <% if !nodedatas.nil? %>
+	       <% hostname = sitenodes.first.hostname %>
+	       <% latitude = sitenodes.first.latitude %>
+	       <% longitude = sitenodes.first.longitude %>
+	       <% strength = nodedatas.inject(0){|sum, item| sum + item.nitems} %>
 		var point = new GPoint(<%= longitude %>,<%= latitude %>);
             	//var marker = createMarker(point,'<div>Hostname: <%=h hostname %><br/>Average Slices: <%=h strength %></div>')
-		var marker = drawCircle('<div>Hostname: <%=h hostname %><br/>Average Slices: <%=h strength %></div>', point, strength*10, 40)
+		var marker = drawCircle('<div>Hostname: <%=h hostname %><br/>Average Slices: <%=h strength %></div>', point, <%=h strength %>*10, 40)
             	map.addOverlay(marker);
 	     <%end%>
             <%end%>
