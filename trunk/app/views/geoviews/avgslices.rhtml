@@ -2,6 +2,33 @@
      <script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAj-r2SjJ5Kq-dbzdSj4d2vBTv-sWrd8Im-bsWLmAKT5H1zMY3MBSWY-nVbh5VHZIW1TZAWAQDZPJIUA" type="text/javascript"></script>
 
     <script type="text/javascript">
+	function drawCircle(html, center, radius, nodes, liColor, liWidth, liOpa, fillColor, fillOpa){
+	  // Esa 2006
+	  //calculating km/degree
+	  var latConv = center.distanceFrom(new GLatLng(center.lat()+0.1, center.lng()))/100;
+	  var lngConv = center.distanceFrom(new GLatLng(center.lat(), center.lng()+0.1))/100;
+
+	  //Loop 
+	  var points = [];
+	  var step = parseInt(360/nodes)||10;
+	  for(var i=0; i<=360; i+=step)
+	  {
+	    var pint = new GLatLng(center.lat() + (radius/latConv * Math.cos(i * Math.PI/180)), 
+	      center.lng() + 
+	      (radius/lngConv * Math.sin(i * Math.PI/180)));
+	    points.push(pint);
+	    bounds.extend(pint); //this is for fit function
+	  }
+	  points.push(points[0]); // Closes the circle, thanks Martin
+	  fillColor = fillColor||liColor||"#0055ff";
+	  liWidth = liWidth||2;
+	  var poly = new GPolygon(points,liColor,liWidth,liOpa,fillColor,fillOpa);
+	  GEvent.addListener(poly, "click",  function() {
+             marker.openInfoWindowHtml(html);
+             });
+          return marker;
+	}
+
         // helper function to create markers
         function createMarker(point,html) {
             var marker = new GMarker(point);
@@ -18,11 +45,20 @@
             map.addControl(new GSmallMapControl());
             map.centerAndZoom(new GPoint(0, 0), 16);
             
-            <%@nodes.each do |node| nodedata = @avgslices.select{|s| s[:node_id] == node[:id]}.first %>
+            <% @sites = @nodes.map{|n| n.site_id}.uniq
+	       @sites.each do |site|
+	          sitenodes = @nodes.select{|n| n.site_id = site}
+@nodes.each do |node| nodedata = @avgslices.select{|s| s[:node_id] == node[:id]}.first %>
              <%if !nodedata.nil? %>
-            var point = new GPoint(<%=node[:longitude]%>,<%=node[:latitude]%>);
-            var marker = createMarker(point,'<div>Hostname: <%=h node[:hostname]%><br/>Average Slices: <%=h nodedata.nitems %></div>')
-            map.addOverlay(marker);
+	     <% hostname = sitenodes.first.hostname
+	        latitude = sitenodes.first.latitude
+	        longitude = sitenodes.first.longitude
+		strength = sitesnodes.inject(0){|sum, item| sum + item.nitems}
+		%>
+		var point = new GPoint(<%= longitude %>,<%= latitude %>);
+            	//var marker = createMarker(point,'<div>Hostname: <%=h hostname %><br/>Average Slices: <%=h strength %></div>')
+		var marker = drawCircle('<div>Hostname: <%=h hostname %><br/>Average Slices: <%=h strength %></div>', point, strength*10, 40)
+            	map.addOverlay(marker);
 	     <%end%>
             <%end%>
         }    

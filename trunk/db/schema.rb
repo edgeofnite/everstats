@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091105124128) do
+ActiveRecord::Schema.define(:version => 20091109120833) do
 
   create_table "configurations", :force => true do |t|
     t.string "config_key",   :limit => 20, :default => "", :null => false
@@ -88,6 +88,9 @@ ActiveRecord::Schema.define(:version => 20091105124128) do
     t.string  "hostname",         :limit => 100, :default => "",   :null => false
     t.string  "primaryipaddress", :limit => 100, :default => "",   :null => false
     t.boolean "online",                          :default => true
+    t.integer "site_id",                         :default => 0
+    t.float   "longitude",                       :default => 0.0
+    t.float   "latitude",                        :default => 0.0
   end
 
   add_index "nodes", ["hostname", "primaryipaddress"], :name => "hostname", :unique => true
