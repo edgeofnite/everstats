@@ -1,0 +1,36 @@
+<div id="content">
+     <script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAj-r2SjJ5Kq-dbzdSj4d2vBTv-sWrd8Im-bsWLmAKT5H1zMY3MBSWY-nVbh5VHZIW1TZAWAQDZPJIUA" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        // helper function to create markers
+        function createMarker(point,html) {
+            var marker = new GMarker(point);
+            GEvent.addListener(marker, "click", function() {
+             marker.openInfoWindowHtml(html);
+             });
+            return marker;
+        }
+        
+        // this is called when the page loads. 
+        // it initializes the map, and creates each marker
+        function initialize() {
+            var map = new GMap(document.getElementById("map"));
+            map.addControl(new GSmallMapControl());
+            map.centerAndZoom(new GPoint(-122.443882, 37.769079), 5);
+            
+            <%@nodes.each do |node|%>
+            var point = new GPoint(<%=node[:longitude]%>,<%=node[:latitude]%>);
+            var marker = createMarker(point,'<div><%=h node[:hostname]%></div>')
+            map.addOverlay(marker);
+            <%end%>
+        }    
+    </script>
+
+</head>
+<body onload="initialize()">
+
+Here's the map:
+<!-- This is the element in which the map will be displayed. -->
+<div id="map" style="width: 450px; height: 350px"></div>
+
+</div>
