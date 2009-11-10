@@ -1,0 +1,2 @@
+module GeoviewsHelper
+end
