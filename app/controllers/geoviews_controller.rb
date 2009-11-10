@@ -14,10 +14,11 @@ class GeoviewsController < ApplicationController
         max(max_cpu) as max_cpu, max(max_send_BW) as max_send_BW, max(max_recv_BW) as max_recv_BW,
         avg(avg_pctmem) as avg_pctmem, max(max_pctmem) as max_pctmem,
         avg(avg_phymem) as avg_phymem, max(max_phymem) as max_phymem,
-        avg(avg_virmem) as avg_virmem, max(max_virmem) as max_virmem,
+        avg(avg_virmem) as avg_virmem, max(max_virmem) as max_virmem
         from dayusagesummaries where slice_id = -1 and node_id != -1 group by node_id'''
 
         @avgslices = Dayusagesummary.find_by_sql basic_query_str
         @nodes = Node.find(:all)
+	@nodes.delete_if{|x| x['primaryipaddress'] == "" or x['longitude'] == 0 or x['latitude'] == 0}
   end
 end

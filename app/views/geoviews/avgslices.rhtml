@@ -16,12 +16,14 @@
         function initialize() {
             var map = new GMap(document.getElementById("map"));
             map.addControl(new GSmallMapControl());
-            map.centerAndZoom(new GPoint(-122.443882, 37.769079), 5);
+            map.centerAndZoom(new GPoint(0, 0), 16);
             
-            <%@nodes.each do |node|%>
+            <%@nodes.each do |node| nodedata = @avgslices.select{|s| s[:node_id] == node[:id]}.first %>
+             <%if !nodedata.nil? %>
             var point = new GPoint(<%=node[:longitude]%>,<%=node[:latitude]%>);
-            var marker = createMarker(point,'<div><%=h node[:hostname]%></div>')
+            var marker = createMarker(point,'<div>Hostname: <%=h node[:hostname]%><br/>Average Slices: <%=h nodedata.nitems %></div>')
             map.addOverlay(marker);
+	     <%end%>
             <%end%>
         }    
     </script>
@@ -31,6 +33,6 @@
 
 Here's the map:
 <!-- This is the element in which the map will be displayed. -->
-<div id="map" style="width: 450px; height: 350px"></div>
+<div id="map" style="width: 600px; height: 350px"></div>
 
 </div>
