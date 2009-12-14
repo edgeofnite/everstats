@@ -4,7 +4,7 @@ require 'slicegroupview_controller'
 # Re-raise errors caught by the controller.
 class SlicegroupviewController; def rescue_action(e) raise e end; end
 
-class SlicegroupviewControllerTest < Test::Unit::TestCase
+class SlicegroupviewControllerTest < ActionController::TestCase
   def setup
     @controller = SlicegroupviewController.new
     @request    = ActionController::TestRequest.new
