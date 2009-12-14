@@ -22,10 +22,9 @@ class NodeController < ApplicationController
 
   def status(nodelist)
     result = []
-    #debugger
     nodelist.each do |n|
       node = Node.find_by_hostname(n)
-      numslices = Dayusagesummary.calculate(:count, :slice_id, :conditions => "slice_id = -1 and node_id = #{node.id}", :having => "day = now()'")
+      numslices = Dayusagesummary.calculate(:nitems, :conditions => "slice_id = -1 and node_id = #{node.id} and day = date(date_sub(now(), interval 1 day))'")
       item = NodeStatus.new
       item.name = n
       item.numslices = numslices
