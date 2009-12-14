@@ -4,7 +4,7 @@ require 'daterangeview_controller'
 # Re-raise errors caught by the controller.
 class DaterangeviewController; def rescue_action(e) raise e end; end
 
-class DaterangeviewControllerTest < Test::Unit::TestCase
+class DaterangeviewControllerTest < ActionController::TestCase
   def setup
     @controller = DaterangeviewController.new
     @request    = ActionController::TestRequest.new
