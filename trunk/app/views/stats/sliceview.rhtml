@@ -7,7 +7,8 @@ TableKit.options.rowOddClass = "tableoddrow";
 <h2>Everstats - Slice Resource Consumption Over Time for
     <%= @slices_display %></i></b>
 </h2>
-<p> Export as 
+<p> Export as
+<%= link_to "CSV", :controller => "stats", :action => "sliceview.csv"%>
 <%= link_to "XML", :controller => "stats", :action => "sliceview.xml"%>
 <%= link_to "Excel", :controller => "stats", :action => "sliceview.xls"%>
 </p>

@@ -5,6 +5,7 @@ TableKit.options.rowOddClass = "tableoddrow";
 </script>
 <h2>Everstats - Node Usage Over Time</h2>
 <p> Export as 
+<%= link_to "CSV", :controller => "stats", :action => "nodeview.csv"%>
 <%= link_to "XML", :controller => "stats", :action => "nodeview.xml"%>
 <%= link_to "Excel", :controller => "stats", :action => "nodeview.xls"%>
 </p>
