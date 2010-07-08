@@ -80,6 +80,7 @@ class StatsController < ApplicationController
     
       respond_to do |format|
         format.xml  { render :xml => @past_year_usages }
+	format.csv  { render :csv => @past_year_usages }
         format.xls  do
           e = Excel::Workbook.new
           e.addWorksheetFromActiveRecord "past week", "Dayusagesummary", @past_week_usages

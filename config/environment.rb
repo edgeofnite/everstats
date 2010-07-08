@@ -17,6 +17,8 @@ Rails::Initializer.run do |config|
   # Specify gems that this application depends on and have them installed with rake gems:install
   config.gem "mysql"
   config.gem "datanoise-actionwebservice", :lib => 'actionwebservice'
+  config.gem "fastercsv"
+  #config.gem "crafterm-comma"
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
