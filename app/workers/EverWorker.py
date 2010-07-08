@@ -181,7 +181,7 @@ def get_nodes(ReCheckDeadNodes = 1):
 		curLen = min(curOff+MAX_THREADS,len(NODES))
 		PrintMe(logFile, "\tWorking on :"+str(curOff)+"-"+str(curLen))
 		for node in NODES[curOff:curLen]:
-			if Origin_Nodes[node][2] == 1 or ReCheckDeadNodes:
+			if not Origin_Nodes.has_key(node) or Origin_Nodes[node][2] == 1 or ReCheckDeadNodes:
 				current = RequestNode(node, SLICESTAT_PATH, SLICESTAT_PORT)
 				thread_list.append(current)
 				current.start();
@@ -228,12 +228,13 @@ def insert_nodes():
 	day = "%s-%s-%s" %(lt[0],lt[1],lt[2])
 	existingDayUsages = DB.GetAllDayUsages(day)
 	for node in NODES_DATA:
-		node_id = Origin_Nodes[node][0]
-		for slice in NODES_DATA[node]:
-			slice_id = Origin_Slices[slice[0]]
-			newDataSamples.append((max_id, slice_id, node_id, dayTime, slice[1], slice[2], slice[3], GET_NODE_LOOP_TIME, slice[4], slice[5], slice[6], slice[7], slice[8]))
-			max_id = max_id + 1
-			max_dayUsage_id = update_day_usage(max_dayUsage_id, node_id, slice_id, existingDayUsages[node_id][slice_id], slice, day, dayTime);
+		if Origin_Nodes.has_key(node):
+			node_id = Origin_Nodes[node][0]
+			for slice in NODES_DATA[node]:
+				slice_id = Origin_Slices[slice[0]]
+				newDataSamples.append((max_id, slice_id, node_id, dayTime, slice[1], slice[2], slice[3], GET_NODE_LOOP_TIME, slice[4], slice[5], slice[6], slice[7], slice[8]))
+				max_id = max_id + 1
+				max_dayUsage_id = update_day_usage(max_dayUsage_id, node_id, slice_id, existingDayUsages[node_id][slice_id], slice, day, dayTime);
 	if (len(newDataSamples) > 0):
 		DB.AddNewSamples(tuple(newDataSamples))
 
