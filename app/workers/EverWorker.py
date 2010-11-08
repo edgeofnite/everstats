@@ -75,7 +75,7 @@ class RequestNode(Thread):
 			sub_tokens = tokens[i].split(",")
 			if (len(sub_tokens) > SLICESTAT_MAX_INDEX):
 				sub_res = []
-				sub_res.append(sub_tokens[SLICESTAT_SLICE_NAME_INDEX])
+				sub_res.append(sub_tokens[SLICESTAT_SLICE_NAME_INDEX].lower())
 				sub_res.append(sub_tokens[SLICESTAT_CPU_INDEX])
 				sub_res.append(sub_tokens[SLICESTAT_SEND_BW_INDEX])
 				sub_res.append(sub_tokens[SLICESTAT_RECV_BW_INDEX])
