@@ -1,0 +1,3 @@
+A monitoring front-end for [PlanetLab](http://planet-lab.org) systems.  Everstats is designed to monitor node and slice activity on [PlanetLab](http://planet-lab.org) systems.  It retrieves public data from a [PlanetLab](http://planet-lab.org) Central Server (MyPLC) and then polls the slicestats package located on each planetlab node to gather specific performance data.  Everstats provides daily aggregate performance data.
+
+Everstats is a Ruby on Rails project using Python for the data collection.
